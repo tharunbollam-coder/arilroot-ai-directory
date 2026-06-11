@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme {
+    --font-serif: "Fraunces", "Merriweather", Georgia, serif;
+    --font-sans: "Inter", system-ui, sans-serif;
+
+    --color-alabaster: #FAF8F5;
+    --color-charcoal: #292524;
+    --color-stone-line: #E7E5E4;
+    --color-executive-blue: #1E3A8A;
+}
+
+@layer base {
+    body {
+        background-color: var(--color-alabaster);
+        color: var(--color-charcoal);
+        font-family: var(--font-sans);
+    }
+
+    /* Highly optimized reading sizes for long-form content */
+    p,
+    main p {
+        font-size: 16.5px;
+        line-height: 1.8;
+        color: #44403C;
+        /* stone-700 for softer reading */
+    }
+
+    @media (min-width: 640px) {
+
+        p,
+        main p {
+            font-size: 15.5px;
+            line-height: 1.75;
+        }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #1C1917;
+        /* stone-900 */
+    }
+}
+
+/* 
+  Executive UI Components 
+  Shadows represent physical stacked paper, not interactive buttons.
+*/
+
+.executive-card {
+    background-color: #FFFFFF;
+    border: 1px solid #D6D3D1;
+    /* stone-300 */
+    border-radius: 12px;
+    /* Sharp, static, low-opacity shadow for an architectural feel */
+    box-shadow: 6px 6px 0px 0px rgba(28, 25, 23, 0.06);
+}
+
+.executive-nested-card {
+    background-color: #FCFBF9;
+    border: 1px solid #E7E5E4;
+    /* stone-200 */
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    /* simple drop shadow */
+}
+
+.executive-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    border-radius: 8px;
+    background-color: #1C1917;
+    /* stone-900 */
+    color: #FFFFFF;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.executive-btn:hover {
+    background-color: #292524;
+    /* stone-800 */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.executive-badge {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid #E7E5E4;
+    border-radius: 9999px;
+    /* full pill shape */
+    background-color: #F5F5F4;
+    /* stone-100 */
+    color: #57534E;
+    /* stone-500 */
+}
+
+.executive-badge-primary {
+    background-color: var(--color-executive-blue);
+    color: #FFFFFF;
+    border-color: var(--color-executive-blue);
+}

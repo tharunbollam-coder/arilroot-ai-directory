@@ -1,0 +1,343 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+// Use getStaticPaths to map category and model.id for all files at build time
+export async function getStaticPaths() {
+  const allModels = await getCollection('models');
+  
+  return allModels.map(model => {
+    const category = model.data.category;
+    // Extract the model name slug from model.id (handles folder paths)
+    const modelSlug = model.id.split('/').pop();
+    
+    return {
+      params: {
+        category,
+        model: modelSlug
+      },
+      props: { model }
+    };
+  });
+}
+
+const { model } = Astro.props;
+
+// Human-friendly mapping for category titles
+const categoryDisplayNames: Record<string, string> = {
+  'text-models': 'Text Models & Chatbots',
+  'image-models': 'Image & Art Generators',
+  'audio-models': 'Audio & Speech Synthesizers',
+  'video-models': 'Video Generators',
+};
+
+const categoryDisplayName = categoryDisplayNames[model.data.category] || model.data.category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+---
+
+<Layout 
+  title={`${model.data.title} Review & Detailed Analysis - ArilRoot`}
+  description={model.data.description}
+>
+  <!-- Main layout wrapper with narrow column for optimal reading and eye tracking -->
+  <div class="py-12 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+    
+    <!-- Premium Breadcrumbs Navigation -->
+    <nav class="flex mb-10 font-sans text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] text-stone-400" aria-label="Breadcrumb">
+      <ol class="inline-flex flex-wrap items-center gap-y-2">
+        <li class="inline-flex items-center">
+          <a href="/" class="hover:text-stone-900 transition-colors">Home</a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="w-3.5 h-3.5 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            <a href={`/${model.data.category}`} class="hover:text-stone-900 transition-colors">{categoryDisplayName}</a>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center min-w-0">
+            <svg class="w-3.5 h-3.5 mx-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            <span class="text-stone-800 truncate max-w-[120px] sm:max-w-none">{model.data.title}</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Executive Hero Header section -->
+    <header class="mb-12 border-b border-stone-200 pb-10">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-8">
+        <!-- Title, Logo & Creator info -->
+        <div class="flex items-start sm:items-center gap-6">
+          {model.data.logo && (
+            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white border border-stone-200 p-3 flex items-center justify-center flex-shrink-0 shadow-sm">
+              <img 
+                src={model.data.logo} 
+                alt={`${model.data.title} brand mark`} 
+                class="w-full h-full object-contain"
+              />
+            </div>
+          )}
+          <div>
+            <div class="flex flex-wrap items-center gap-3 mb-3">
+              <span class="executive-badge executive-badge-primary">
+                {categoryDisplayName}
+              </span>
+              <span class="executive-badge">
+                by {model.data.creator}
+              </span>
+            </div>
+            <h1 class="font-serif text-4xl sm:text-5xl font-bold text-stone-900 tracking-tight leading-tight">
+              {model.data.title}
+            </h1>
+          </div>
+        </div>
+
+        <!-- High-Contrast Official Link Button -->
+        {model.data.officialLink && (
+          <a 
+            href={model.data.officialLink} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="executive-btn flex-shrink-0"
+          >
+            Visit Official Site &rarr;
+          </a>
+        )}
+      </div>
+
+      <!-- Description Block -->
+      <p class="text-stone-600 text-lg sm:text-xl mt-8 leading-relaxed font-normal max-w-2xl">
+        {model.data.description}
+      </p>
+    </header>
+
+    <!-- Main Content Cards Stack -->
+    <div class="space-y-8">
+      
+      <!-- Introduction section -->
+      {model.data.introduction && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-5">Introduction</h2>
+          <p class="text-stone-700 leading-relaxed font-normal">{model.data.introduction}</p>
+        </section>
+      )}
+
+      <!-- How It Works section -->
+      {model.data.howItWorks && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-5">How It Works</h2>
+          <p class="text-stone-700 leading-relaxed font-normal">{model.data.howItWorks}</p>
+        </section>
+      )}
+
+      <!-- Best For section -->
+      {model.data.bestFor && (model.data.bestFor.who || model.data.bestFor.what) && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Target Audience & Intent</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {model.data.bestFor.who && (
+              <div class="executive-nested-card p-6 border-stone-200">
+                <h3 class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 mb-3">Ideal User Profiles</h3>
+                <p class="text-stone-700 text-sm leading-relaxed">{model.data.bestFor.who}</p>
+              </div>
+            )}
+            {model.data.bestFor.what && (
+              <div class="executive-nested-card p-6 border-stone-200">
+                <h3 class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 mb-3">Primary Workloads</h3>
+                <p class="text-stone-700 text-sm leading-relaxed">{model.data.bestFor.what}</p>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <!-- Top Features section -->
+      {model.data.topFeatures && model.data.topFeatures.length > 0 && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Key Capabilities</h2>
+          <div class="space-y-6">
+            {model.data.topFeatures.map((feature) => (
+              <div class="border-l-[3px] border-stone-300 pl-4">
+                <h3 class="font-serif text-lg font-bold text-stone-900 mb-1">{feature.title}</h3>
+                <p class="text-stone-700 text-sm leading-relaxed">{feature.details}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Pricing Plans section -->
+      {model.data.pricing && (model.data.pricing.free || model.data.pricing.paid) && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Pricing & Plans</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {model.data.pricing.free && (
+              <div class="executive-nested-card p-6 border-stone-200">
+                <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 block mb-2">Free Tier</span>
+                <div class="text-2xl font-bold text-stone-900 mb-3 font-serif">Complimentary</div>
+                <p class="text-stone-600 text-sm leading-relaxed">{model.data.pricing.free}</p>
+              </div>
+            )}
+            {model.data.pricing.paid && (
+              <div class="executive-nested-card p-6 border-stone-200 bg-stone-50">
+                <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 block mb-2">Paid Tiers</span>
+                <div class="text-2xl font-bold text-stone-900 mb-3 font-serif">Premium Options</div>
+                <p class="text-stone-600 text-sm leading-relaxed">{model.data.pricing.paid}</p>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <!-- Model Variants section (REVERTED BACK TO YOUR ORIGINAL STACKED LAYOUT) -->
+      {model.data.modelVariants && model.data.modelVariants.length > 0 && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Model Varieties</h2>
+          <div class="space-y-6">
+            {model.data.modelVariants.map((variant) => (
+              <div class="border-b border-stone-100 pb-6 last:border-0 last:pb-0">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                  <h3 class="font-serif text-lg font-bold text-stone-900">{variant.name}</h3>
+                  <div>
+                    {variant.freeTier ? (
+                      <span class="executive-badge executive-badge-primary">Free Variant</span>
+                    ) : (
+                      <span class="executive-badge">Paid Variant</span>
+                    )}
+                  </div>
+                </div>
+                <p class="text-stone-700 text-sm leading-relaxed font-normal">
+                  {variant.details}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Access Platforms section -->
+      {model.data.accessPlatforms && model.data.accessPlatforms.length > 0 && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Access Points</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {model.data.accessPlatforms.map((platform) => (
+              <div class="executive-nested-card p-5 border-stone-200">
+                <h3 class="font-serif font-bold text-stone-900 text-base mb-1.5">{platform.name}</h3>
+                <p class="text-stone-600 text-xs leading-relaxed font-medium">{platform.details}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Use Cases section (REVERTED TO YOUR ORIGINAL LAYOUT) -->
+      {model.data.useCases && model.data.useCases.length > 0 && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Use Cases</h2>
+          <div class="space-y-6">
+            {model.data.useCases.map((useCase) => (
+              <div class="border-b border-stone-100 pb-6 last:border-0 last:pb-0">
+                <h3 class="font-serif text-lg font-bold text-stone-900 mb-2">{useCase.title}</h3>
+                <p class="text-stone-700 text-sm leading-relaxed font-normal">{useCase.details}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Quick Ideas section -->
+      {model.data.quickIdeas && model.data.quickIdeas.length > 0 && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Quick Ideas</h2>
+          <ul class="list-none pl-0 space-y-3 text-stone-700 text-sm font-normal">
+            {model.data.quickIdeas.map((idea) => (
+              <li class="leading-relaxed flex items-start gap-3 mb-2.5 last:mb-0">
+                <span class="text-stone-400 font-bold select-none mt-0.5">●</span>
+                <span>{idea}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <!-- Pros and Cons section -->
+      {((model.data.pros && model.data.pros.length > 0) || (model.data.cons && model.data.cons.length > 0)) && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Pros & Cons</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Pros -->
+            {model.data.pros && model.data.pros.length > 0 && (
+              <div>
+                <h3 class="inline-flex items-center gap-2 font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full mb-6">
+                  <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                  </svg>
+                  Strengths
+                </h3>
+                <ul class="space-y-4">
+                  {model.data.pros.map((pro) => (
+                    <li class="flex items-start gap-3">
+                      <span class="text-emerald-500 mt-0.5 text-xs">●</span>
+                      <span class="text-stone-700 text-sm leading-relaxed">{pro}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <!-- Cons -->
+            {model.data.cons && model.data.cons.length > 0 && (
+              <div>
+                <h3 class="inline-flex items-center gap-2 font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-rose-700 bg-rose-50 border border-rose-200 px-3 py-1.5 rounded-full mb-6">
+                  <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Weaknesses
+                </h3>
+                <ul class="space-y-4">
+                  {model.data.cons.map((con) => (
+                    <li class="flex items-start gap-3">
+                      <span class="text-rose-400 mt-0.5 text-xs">●</span>
+                      <span class="text-stone-700 text-sm leading-relaxed">{con}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <!-- Latest Updates section (REVERTED BACK FROM TIMELINE TO YOUR ORIGINAL LAYOUT) -->
+      {model.data.latestUpdates && model.data.latestUpdates.length > 0 && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Latest Updates</h2>
+          <div class="space-y-6">
+            {model.data.latestUpdates.map((update) => (
+              <div class="border-b border-stone-100 pb-6 last:border-0 last:pb-0">
+                <h3 class="font-serif text-lg font-bold text-stone-900 mb-2">{update.title}</h3>
+                <p class="text-stone-700 text-sm leading-relaxed font-normal">
+                  {update.details}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Alternatives section -->
+      {model.data.alternatives && model.data.alternatives.length > 0 && (
+        <section class="executive-card p-6 sm:p-8 md:p-10">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Similar Alternatives</h2>
+          <div class="space-y-6">
+            {model.data.alternatives.map((alt) => (
+              <div class="border-b border-stone-100 pb-4 last:border-0 last:pb-0">
+                <h3 class="font-sans font-bold text-sm text-stone-900 mb-1.5">{alt.name}</h3>
+                <p class="text-stone-700 text-sm leading-relaxed font-normal">{alt.value}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+    </div>
+  </div>
+</Layout>
