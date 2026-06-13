@@ -16,12 +16,32 @@ const modelsCollection = defineCollection({
         logo: z.string().url().optional().nullable(),
         officialLink: z.string().url().optional().nullable(),
 
+        // ==========================================
+        // NEW ADDITION: EDITOR'S REVIEW (OPTIONAL)
+        // ==========================================
+        editorsReview: z.object({
+            rating: z.string(),
+            verdict: z.string(),
+            handsOnNotes: z.string(),
+        }).optional(),
+
+        // ==========================================
+        // NEW ADDITION: PROMPT TECHNIQUES (DEFAULTS TO EMPTY ARRAY)
+        // ==========================================
+        promptTechniques: z.array(z.object({
+            title: z.string(),
+            concept: z.string(),
+            workflow: z.string(),
+        })).default([]),
+
         // Narrative Copy (Optional)
         introduction: z.string().optional(),
         howItWorks: z.string().optional(),
 
         // Core Metrics (Optional wrappers to prevent build crashes)
         pricing: z.object({
+            startingPrice: z.string().optional(),
+            pricingUrl: z.string().url().optional(),
             free: z.string(),
             paid: z.string(),
         }).optional(),

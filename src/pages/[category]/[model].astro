@@ -38,37 +38,39 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
   title={`${model.data.title} Review & Detailed Analysis - ArilRoot`}
   description={model.data.description}
 >
-  <!-- Main layout wrapper with narrow column for optimal reading and eye tracking -->
+  <!-- Main layout wrapper with unified narrow column for perfect vertical alignment -->
   <div class="py-12 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
     
-    <!-- Premium Breadcrumbs Navigation -->
-    <nav class="flex mb-10 font-sans text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] text-stone-400" aria-label="Breadcrumb">
+    <!-- Layer 1 (Top): Breadcrumbs (Freely floating outside the card container) -->
+    <nav class="flex mb-6 font-sans text-[11px] uppercase tracking-[0.2em] text-gray-400" aria-label="Breadcrumb">
       <ol class="inline-flex flex-wrap items-center gap-y-2">
         <li class="inline-flex items-center">
-          <a href="/" class="hover:text-stone-900 transition-colors">Home</a>
+          <a href="/" class="hover:text-black transition-colors">Home</a>
         </li>
         <li>
           <div class="flex items-center">
-            <svg class="w-3.5 h-3.5 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-            <a href={`/${model.data.category}`} class="hover:text-stone-900 transition-colors">{categoryDisplayName}</a>
+            <svg class="w-3.5 h-3.5 mx-2 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            <a href={`/${model.data.category}`} class="hover:text-black transition-colors">{categoryDisplayName}</a>
           </div>
         </li>
         <li>
           <div class="flex items-center min-w-0">
-            <svg class="w-3.5 h-3.5 mx-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-            <span class="text-stone-800 truncate max-w-[120px] sm:max-w-none">{model.data.title}</span>
+            <svg class="w-3.5 h-3.5 mx-2 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            <span class="text-gray-500 truncate max-w-[120px] sm:max-w-none">{model.data.title}</span>
           </div>
         </li>
       </ol>
     </nav>
 
-    <!-- Executive Hero Header section -->
-    <header class="mb-12 border-b border-stone-200 pb-10">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-8">
-        <!-- Title, Logo & Creator info -->
-        <div class="flex items-start sm:items-center gap-6">
+    <!-- Unified Hero Card Section Container -->
+    <div class="bg-white rounded-3xl p-8 md:p-10 border border-gray-100 shadow-sm mb-8">
+      
+      <!-- Layer 2 (Middle): Action Row -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <!-- Left Side (Branding Info) -->
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
           {model.data.logo && (
-            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white border border-stone-200 p-3 flex items-center justify-center flex-shrink-0 shadow-sm">
+            <div class="w-16 h-16 rounded-2xl border border-gray-100 bg-gray-50 p-2 overflow-hidden shrink-0 flex items-center justify-center shadow-xs">
               <img 
                 src={model.data.logo} 
                 alt={`${model.data.title} brand mark`} 
@@ -77,38 +79,40 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
             </div>
           )}
           <div>
-            <div class="flex flex-wrap items-center gap-3 mb-3">
-              <span class="executive-badge executive-badge-primary">
+            <div class="flex flex-wrap items-center gap-2 mb-2">
+              <span class="inline-block font-sans font-bold text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-100">
                 {categoryDisplayName}
               </span>
-              <span class="executive-badge">
+              <span class="font-sans text-[10px] text-gray-400 font-medium uppercase tracking-wider">
                 by {model.data.creator}
               </span>
             </div>
-            <h1 class="font-serif text-4xl sm:text-5xl font-bold text-stone-900 tracking-tight leading-tight">
+            <h1 class="font-serif text-3xl sm:text-4xl font-bold text-black tracking-tight leading-tight">
               {model.data.title}
             </h1>
           </div>
         </div>
 
-        <!-- High-Contrast Official Link Button -->
+        <!-- Right Side (CTA) -->
         {model.data.officialLink && (
           <a 
             href={model.data.officialLink} 
             target="_blank" 
             rel="noopener noreferrer" 
-            class="executive-btn flex-shrink-0"
+            class="bg-black text-white font-sans text-xs font-bold uppercase tracking-widest px-6 py-4 rounded-xl hover:opacity-90 transition flex-shrink-0 text-center"
           >
             Visit Official Site &rarr;
           </a>
         )}
       </div>
 
-      <!-- Description Block -->
-      <p class="text-stone-600 text-lg sm:text-xl mt-8 leading-relaxed font-normal max-w-2xl">
-        {model.data.description}
-      </p>
-    </header>
+      <!-- Layer 3 (Bottom): Core Description -->
+      <div class="mt-8 pt-8 border-t border-gray-100">
+        <p class="text-gray-600 font-sans text-base leading-relaxed max-w-4xl">
+          {model.data.description}
+        </p>
+      </div>
+    </div>
 
     <!-- Main Content Cards Stack -->
     <div class="space-y-8">
@@ -165,30 +169,90 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
         </section>
       )}
 
+      <!-- ========================================== -->
+      <!-- NEW: Prompting Techniques (Placed Before Pricing) -->
+      <!-- ========================================== -->
+      {model.data.promptTechniques && model.data.promptTechniques.length > 0 && (
+        <section class="executive-card bg-stone-50 border-stone-200 p-6 sm:p-8 md:p-10 shadow-sm">
+          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6 flex items-center gap-2">
+            <svg class="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Mastery Prompting Techniques
+          </h2>
+          <div class="space-y-8">
+            {model.data.promptTechniques.map((tech) => (
+              <div class="border-b border-stone-200 last:border-0 pb-8 last:pb-0">
+                <h3 class="font-sans text-lg font-bold text-stone-900">{tech.title}</h3>
+                <p class="text-stone-600 font-sans text-sm mt-2 mb-4 leading-relaxed">
+                  <span class="font-bold text-stone-800">The Friction:</span> {tech.concept}
+                </p>
+                <div class="bg-stone-900 text-stone-100 p-5 rounded-xl font-mono text-xs sm:text-sm leading-relaxed shadow-inner">
+                  <span class="text-stone-400 block font-sans font-bold uppercase tracking-[0.15em] text-[10px] mb-2 border-b border-stone-700 pb-2">The Correct Workflow:</span>
+                  {tech.workflow}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       <!-- Pricing Plans section -->
       {model.data.pricing && (model.data.pricing.free || model.data.pricing.paid) && (
         <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Pricing & Plans</h2>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-stone-100">
+            <h2 class="font-serif text-2xl font-bold text-stone-900">Pricing & Plans</h2>
+            {model.data.pricing.startingPrice && (
+              <div class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 px-3.5 py-1.5 rounded-full shadow-sm">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                <span class="font-sans text-[10px] font-bold uppercase tracking-[0.1em] text-emerald-800">
+                  {model.data.pricing.startingPrice}
+                </span>
+              </div>
+            )}
+          </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {model.data.pricing.free && (
-              <div class="executive-nested-card p-6 border-stone-200">
-                <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 block mb-2">Free Tier</span>
-                <div class="text-2xl font-bold text-stone-900 mb-3 font-serif">Complimentary</div>
-                <p class="text-stone-600 text-sm leading-relaxed">{model.data.pricing.free}</p>
+              <div class="executive-nested-card p-6 border-stone-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-300">
+                <div class="flex-grow">
+                  <div class="flex items-center justify-between mb-4">
+                    <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-400">Free Tier</span>
+                    <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-stone-100 text-stone-600">Basic</span>
+                  </div>
+                  <div class="text-3xl font-bold text-stone-900 mb-4 font-serif tracking-tight">Free</div>
+                  <p class="text-stone-600 text-sm leading-relaxed">{model.data.pricing.free}</p>
+                </div>
               </div>
             )}
             {model.data.pricing.paid && (
-              <div class="executive-nested-card p-6 border-stone-200 bg-stone-50">
-                <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 block mb-2">Paid Tiers</span>
-                <div class="text-2xl font-bold text-stone-900 mb-3 font-serif">Premium Options</div>
-                <p class="text-stone-600 text-sm leading-relaxed">{model.data.pricing.paid}</p>
+              <div class="executive-nested-card p-6 border-stone-200 bg-stone-50/50 flex flex-col justify-between transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-300 border-t-stone-800 border-t-2">
+                <div class="flex-grow">
+                  <div class="flex items-center justify-between mb-4">
+                    <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500">Paid Tiers</span>
+                    <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 font-semibold">Pro Options</span>
+                  </div>
+                  <div class="text-3xl font-bold text-stone-900 mb-4 font-serif tracking-tight">
+                    Premium Tier
+                  </div>
+                  <p class="text-stone-600 text-sm leading-relaxed mb-6">{model.data.pricing.paid}</p>
+                </div>
+                {model.data.pricing.pricingUrl && (
+                  <a 
+                    href={model.data.pricing.pricingUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="w-full inline-flex items-center justify-center font-sans text-xs font-bold uppercase tracking-wider text-white bg-stone-900 hover:bg-stone-800 px-4 py-2.5 rounded-lg transition-colors border border-stone-800 shadow-sm text-center"
+                  >
+                    View Official Pricing &rarr;
+                  </a>
+                )}
               </div>
             )}
           </div>
         </section>
       )}
 
-      <!-- Model Variants section (REVERTED BACK TO YOUR ORIGINAL STACKED LAYOUT) -->
+      <!-- Model Varieties section -->
       {model.data.modelVariants && model.data.modelVariants.length > 0 && (
         <section class="executive-card p-6 sm:p-8 md:p-10">
           <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Model Varieties</h2>
@@ -229,7 +293,7 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
         </section>
       )}
 
-      <!-- Use Cases section (REVERTED TO YOUR ORIGINAL LAYOUT) -->
+      <!-- Use Cases section -->
       {model.data.useCases && model.data.useCases.length > 0 && (
         <section class="executive-card p-6 sm:p-8 md:p-10">
           <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Use Cases</h2>
@@ -306,7 +370,7 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
         </section>
       )}
 
-      <!-- Latest Updates section (REVERTED BACK FROM TIMELINE TO YOUR ORIGINAL LAYOUT) -->
+      <!-- Latest Updates section -->
       {model.data.latestUpdates && model.data.latestUpdates.length > 0 && (
         <section class="executive-card p-6 sm:p-8 md:p-10">
           <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Latest Updates</h2>
@@ -334,6 +398,39 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
                 <p class="text-stone-700 text-sm leading-relaxed font-normal">{alt.value}</p>
               </div>
             ))}
+          </div>
+        </section>
+      )}
+
+      <!-- ========================================== -->
+      <!-- Editor's Review (Placed Last) -->
+      <!-- ========================================== -->
+      {model.data.editorsReview && (
+        <section class="executive-card p-6 sm:p-8 md:p-10 mt-12">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-stone-100">
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-stone-900 flex items-center gap-3">
+              <svg class="w-6 h-6 sm:w-8 sm:h-8 text-stone-700" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+              </svg>
+              Editor's Final Verdict
+            </h2>
+            <div class="inline-flex items-center gap-2 bg-stone-100 border border-stone-200 px-4 py-2 rounded-xl font-mono text-sm font-bold text-stone-800 shadow-xs">
+              Score: {model.data.editorsReview.rating}
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 block mb-3">The Verdict</span>
+            <blockquote class="text-stone-800 text-lg sm:text-xl leading-relaxed font-serif italic border-l-[3px] border-stone-850 pl-4 py-1">
+              "{model.data.editorsReview.verdict}"
+            </blockquote>
+          </div>
+          
+          <div class="executive-nested-card p-6 border-stone-200 bg-stone-50/30">
+            <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 block mb-3">Hands-On Testing Notes</span>
+            <p class="text-stone-700 text-sm leading-relaxed font-sans">
+              {model.data.editorsReview.handsOnNotes}
+            </p>
           </div>
         </section>
       )}
