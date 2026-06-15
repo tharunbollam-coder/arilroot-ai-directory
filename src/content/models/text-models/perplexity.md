@@ -62,14 +62,14 @@ topFeatures:
     details: "Users can organize threads into project folders called 'Spaces' or convert research into publishable, beautifully formatted articles called 'Pages'."
 
 accessPlatforms:
-  - name: "Web Application"
-    details: "Accessible via perplexity.ai with a clean, distraction-free search interface."
-  
+  - name: "Web Browser"
+    details: "You can open any internet browser on your desktop or mobile device, type perplexity.ai into the address line, and begin using the platform immediately. Everything is hosted securely in the cloud, so you can jump right into your searches without downloading any external files or running setups."
+
   - name: "Mobile Apps"
-    details: "Available natively on iOS and Android for mobile research and quick answers."
+    details: "For quick searches on the go, you can open up the App Store on an iPhone or the Google Play Store on an Android phone. Search for the official application, download it, and log into your account so you can type out questions and look up information from anywhere."
 
   - name: "Comet Browser"
-    details: "Perplexity's newly launched AI-native Chromium-based browser featuring built-in context awareness across open tabs, available on desktop and mobile."
+    details: "If you want the tool fully integrated into your web browsing, you can download the standalone Comet Browser application directly from the official website or your computer's built-in app store. You just install it on your Mac, Windows PC, or mobile device to use it as your main, daily web browser."
 
 useCases:
   - title: "Competitive Market Analysis"
@@ -112,7 +112,9 @@ latestUpdates:
 alternatives:
   - name: "ChatGPT (OpenAI)"
     value: "Better for users focused heavily on creative writing, reasoning, and native custom GPT workflows rather than pure research."
+    link: "/text-models/chatgpt"
   
   - name: "Claude (Anthropic)"
     value: "Often preferred for reading massive, complex standalone documents and highly nuanced professional writing."
+    link: "/text-models/claude"
 ---

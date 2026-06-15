@@ -62,14 +62,14 @@ topFeatures:
     details: "A bidirectional voice interface that allows for natural, interrupting, real-time conversations. It processes audio natively rather than converting speech-to-text, making the interaction feel highly human."
 
 accessPlatforms:
-  - name: "Web Application"
-    details: "Accessible via gemini.google.com for standard chat, document upload, and image generation."
-  
+  - name: "Web Browser"
+    details: "You can pull up any browser on your computer, laptop, or mobile phone and type gemini.google.com to get started. You just sign in with your regular Google account, and because it runs entirely online, you don't have to download any installer files or set up any local applications."
+
   - name: "Google Workspace"
-    details: "Integrated directly into Gmail, Google Docs, Google Sheets, and Google Slides via a side-panel assistant."
+    details: "If you already use online Google apps like Gmail, Docs, Sheets, or Slides, you can access the tool right inside those programs. You just open your usual working document or inbox in your web browser, and you will see the tool waiting for you inside a dedicated panel on the side of your screen."
 
   - name: "Android Native Integration"
-    details: "Deeply integrated into the Android OS, capable of replacing Google Assistant to interact with on-screen context and device settings."
+    details: "On Android mobile devices, you can set the tool up as your primary phone assistant through your device settings or by updating it from the Google Play Store. Once enabled, you can bring it up instantly on your phone screen by holding down your phone's power button or using your voice activation command."
 
 useCases:
   - title: "Enterprise Data Synthesis"
@@ -115,7 +115,9 @@ latestUpdates:
 alternatives:
   - name: "ChatGPT (OpenAI)"
     value: "Often preferred for creative writing, general brainstorming, and its highly intuitive custom GPT ecosystem."
+    link: "/text-models/chatgpt"
   
   - name: "Claude (Anthropic)"
     value: "The primary competitor for massive document analysis and complex coding, known for its nuanced writing style and incredibly low hallucination rate."
+    link: "/text-models/claude"
 ---

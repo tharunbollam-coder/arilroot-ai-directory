@@ -59,16 +59,16 @@ topFeatures:
 
 accessPlatforms:
   - name: "Web Browser"
-    details: "Accessible directly through chatgpt.com on desktop and mobile browsers without requiring software installation."
+    details: "You can open up any standard web browser on your desktop computer, laptop, or mobile phone, type chatgpt.com into the search bar, and start using the tool immediately. It runs completely in the cloud, so you do not have to worry about downloading files, dealing with installations, or configuring any system settings to get right into your workspace."
 
   - name: "Android App"
-    details: "The official Android application provides access to ChatGPT's latest features, including voice conversations, image uploads, file analysis, and AI-powered assistance while on the go."
+    details: "If you prefer using your mobile phone or tablet, you can head directly over to the official Google Play Store. Just type ChatGPT into the search box, look for the official app developed by OpenAI, and install it onto your device so you can log into your account and use it while you are away from your computer."
 
   - name: "iOS App"
-    details: "The iPhone and iPad application offers a fully optimized ChatGPT experience with support for voice interaction, image understanding, file uploads, and synchronized conversations."
+    details: "For Apple users, the official mobile application is readily available for both iPhone and iPad. You just need to open up the Apple App Store, search for the official application, and download it to your device. It connects smoothly so all your account data remains completely updated and synchronized."
 
-  - name: "Desktop Apps"
-    details: "Native desktop applications provide a more integrated experience with operating system features, faster access to conversations, file handling capabilities, and productivity workflows."
+  - name: "Desktop Applications"
+    details: "If you want to access the tool without opening a new browser tab every single time, you can use the native desktop versions. You simply download the setup file directly from the main website or your computer's built-in app store to place the tool right onto your Mac or Windows desktop for faster daily access."
 
 useCases:
   - title: "Content Creation & Digital Marketing"
@@ -133,15 +133,18 @@ latestUpdates:
 alternatives:
   - name: "Claude"
     value: "A strong alternative known for long-form writing, document analysis, reasoning tasks, and software development assistance."
+    link: "/text-models/claude"
 
   - name: "Google Gemini"
     value: "A powerful alternative that integrates deeply with Google's ecosystem, including Gmail, Google Docs, Drive, Workspace applications, and search services."
+    link: "/text-models/gemini"
 
   - name: "Microsoft Copilot"
     value: "Well suited for users and organizations heavily invested in Microsoft 365, Windows, Excel, Word, PowerPoint, and enterprise productivity workflows."
 
   - name: "Perplexity"
     value: "A research-focused AI assistant that emphasizes web search, source citations, and finding up-to-date information from across the internet."
+    link: "/text-models/perplexity"
 
 editorsReview:
   rating: "4.8/5"

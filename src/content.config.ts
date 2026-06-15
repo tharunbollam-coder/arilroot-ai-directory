@@ -85,6 +85,7 @@ const modelsCollection = defineCollection({
         alternatives: z.array(z.object({
             name: z.string(),
             value: z.string(),
+            link: z.string().optional(),
         })).default([]),
     }),
 });

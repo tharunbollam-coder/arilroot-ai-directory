@@ -63,14 +63,14 @@ topFeatures:
     details: "Built with 'Constitutional AI,' Claude refuses harmful prompts and hallucinates significantly less than competitors, making it a top choice for strict enterprise and legal environments."
 
 accessPlatforms:
-  - name: "Web Application"
-    details: "Accessible via claude.ai featuring the standard chat interface and the powerful visual 'Artifacts' workspace."
-  
+  - name: "Web Browser"
+    details: "You can open up any standard web browser on your computer or mobile phone, type claude.ai into the address bar, and log straight into your account. The entire system runs fully in the cloud, so you don't need to install software or deal with complicated configurations to start working."
+
   - name: "iOS & Android Apps"
-    details: "Native mobile applications optimized for on-the-go queries, document scanning, and voice dictation."
+    details: "If you want to use it on your phone or tablet, you can head directly to the Apple App Store or Google Play Store. Just look for the official application published by Anthropic, download it to your device, and you can instantly pick up your chats or type questions while you are away from your desk."
 
   - name: "Claude Code (Terminal)"
-    details: "A native CLI tool for developers to integrate Claude directly into their local development environments and IDEs for deep codebase manipulation."
+    details: "For developers who prefer staying inside their coding environments, you can install the tool directly through your system's command line or terminal. You just run a quick setup command to download it, allowing you to interact with the model right inside your local coding folders without opening a separate app."
 
 useCases:
   - title: "Massive Document Synthesis"
@@ -112,7 +112,9 @@ latestUpdates:
 alternatives:
   - name: "ChatGPT (OpenAI)"
     value: "Better for users who want voice mode, live web search, custom GPTs, and image generation all centralized in one place."
+    link: "/text-models/chatgpt"
   
   - name: "Google Gemini"
     value: "Better for users who need to analyze massive datasets (up to 2 million tokens) or who work heavily inside Google Docs and Drive."
+    link: "/text-models/gemini"
 ---
