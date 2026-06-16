@@ -11,6 +11,7 @@ const modelsCollection = defineCollection({
         category: z.string(),
         description: z.string(),
         creator: z.string(),
+        pricingTier: z.enum(['Free', 'Freemium', 'Paid']).default('Freemium'),
 
         // Media & Assets (Optional to support open-source models without logos or sites)
         logo: z.string().url().optional().nullable(),

@@ -39,17 +39,17 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
   description={model.data.description}
 >
   <!-- Main layout wrapper with unified narrow column for perfect vertical alignment -->
-  <div class="py-12 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+  <div class="py-6 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
     
     <!-- Layer 1 (Top): Breadcrumbs (Freely floating outside the card container) -->
-    <nav class="flex mb-6 font-sans text-[11px] uppercase tracking-[0.2em] text-gray-400" aria-label="Breadcrumb">
-      <ol class="inline-flex flex-wrap items-center gap-y-2">
+    <nav class="flex mb-4 sm:mb-6 font-sans text-[9px] sm:text-[11px] uppercase tracking-wider sm:tracking-[0.2em] text-gray-400 overflow-x-auto whitespace-nowrap scrollbar-none pb-1" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center flex-nowrap whitespace-nowrap gap-y-1">
         <li class="inline-flex items-center">
           <a href="/" class="hover:text-black transition-colors">Home</a>
         </li>
         <li>
           <div class="flex items-center">
-            <svg class="w-3.5 h-3.5 mx-2 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            <svg class="w-3.5 h-3.5 mx-2 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
             <a href={`/${model.data.category}`} class="hover:text-black transition-colors">{categoryDisplayName}</a>
           </div>
         </li>
@@ -63,12 +63,12 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
     </nav>
 
     <!-- Unified Hero Card Section Container -->
-    <div class="bg-white rounded-3xl p-8 md:p-10 border border-gray-100 shadow-sm mb-8">
+    <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 border border-gray-100 shadow-sm mb-8">
       
       <!-- Layer 2 (Middle): Action Row -->
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
         <!-- Left Side (Branding Info) -->
-        <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
           {model.data.logo && (
             <div class="w-16 h-16 rounded-2xl border border-gray-100 bg-gray-50 p-2 overflow-hidden shrink-0 flex items-center justify-center shadow-xs">
               <img 
@@ -79,7 +79,7 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
             </div>
           )}
           <div>
-            <div class="flex flex-wrap items-center gap-2 mb-2">
+            <div class="flex flex-wrap items-center gap-2 mb-1.5">
               <span class="inline-block font-sans font-bold text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-100">
                 {categoryDisplayName}
               </span>
@@ -99,7 +99,7 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
             href={model.data.officialLink} 
             target="_blank" 
             rel="noopener noreferrer" 
-            class="bg-black text-white font-sans text-xs font-bold uppercase tracking-widest px-6 py-4 rounded-xl hover:opacity-90 transition flex-shrink-0 text-center"
+            class="bg-black text-white font-sans text-[10px] sm:text-xs font-bold uppercase tracking-widest px-5 py-3 sm:px-6 sm:py-4 rounded-xl hover:opacity-90 transition flex-shrink-0 text-center"
           >
             Visit Official Site &rarr;
           </a>
@@ -107,7 +107,7 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
       </div>
 
       <!-- Layer 3 (Bottom): Core Description -->
-      <div class="mt-8 pt-8 border-t border-gray-100">
+      <div class="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-100">
         <p class="text-gray-600 font-sans text-base leading-relaxed max-w-4xl">
           {model.data.description}
         </p>
@@ -263,7 +263,7 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
                   <h3 class="font-serif text-lg font-bold text-stone-900">{variant.name}</h3>
                   <div>
                     {variant.freeTier ? (
-                      <span class="executive-badge executive-badge-primary">Free Variant</span>
+                      <span class="executive-badge executive-badge-primary">Free Tier (Limits Apply)</span>
                     ) : (
                       <span class="executive-badge">Paid Variant</span>
                     )}

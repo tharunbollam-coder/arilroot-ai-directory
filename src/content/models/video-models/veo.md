@@ -4,6 +4,7 @@ category: "video-models"
 description: "Google Veo is a premium AI video generation model built directly into Google's creative ecosystem to turn plain text prompts and images into high-quality, cinematic footage. It solves some of the most frustrating problems in video creation by automatically generating multi-layered, crystal-clear background soundscapes and voices along with the visuals. It is an exceptional asset for marketing teams, online content creators, and business owners who want to scale up their video output across horizontal and vertical layouts without complex editing setups."
 
 creator: "Google DeepMind"
+pricingTier: Paid
 logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
 officialLink: "https://deepmind.google/technologies/veo/"
 

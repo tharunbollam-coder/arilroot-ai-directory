@@ -115,13 +115,19 @@ const displayName = categoryDisplayNames[category] || category.split('-').map(w 
               <!-- Footer Row -->
               <div class="flex flex-wrap items-center justify-between gap-4 border-t border-stone-100 pt-5 mt-2">
                 <div class="flex gap-2">
-                  {model.data.modelVariants?.filter(v => v.freeTier).length > 0 ? (
+                  {model.data.pricingTier === 'Free' && (
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
-                      Free Variants Available
+                      Free
                     </span>
-                  ) : (
+                  )}
+                  {model.data.pricingTier === 'Freemium' && (
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200">
+                      Freemium
+                    </span>
+                  )}
+                  {model.data.pricingTier === 'Paid' && (
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-stone-50 text-stone-500 border border-stone-200">
-                      Paid Only
+                      Paid
                     </span>
                   )}
                 </div>

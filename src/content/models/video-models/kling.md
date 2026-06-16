@@ -4,6 +4,7 @@ category: "video-models"
 description: "Kling Video 3.0 is a highly capable AI video generator built specifically for modern digital content creation. Instead of forcing you to deal with complicated software or tech jargon, it gives you a clean interface to turn simple text ideas, raw scripts, and static photos into high-quality, cinematic videos. It stands out by easily handling two of the biggest headaches in AI video: keeping your characters looking the same from shot to shot and automatically adding perfectly synced voices and background sounds."
 
 creator: "Kuaishou"
+pricingTier: Free
 logo: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Kuaishou_logo.svg"
 officialLink: "https://klingai.com"
 
