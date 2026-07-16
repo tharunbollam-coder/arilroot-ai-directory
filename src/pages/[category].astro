@@ -55,7 +55,7 @@ const displayName = categoryDisplayNames[category] || category.split('-').map(w 
     </nav>
 
     <!-- Header Card -->
-    <header class="bg-paper-alt border border-line rounded-lg p-6 sm:p-10 mb-10 shadow-[0_4px_12px_rgba(0,0,0,0.01)]">
+    <header class="bg-paper-alt border border-line rounded-lg p-6 sm:p-10 mb-10" style="box-shadow: 0 4px 12px var(--theme-shadow);">
       <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-3">Category Directory</p>
       <h1 class="font-display font-medium text-4xl sm:text-5xl text-ink tracking-tight leading-none mb-6">
         {displayName}
@@ -74,17 +74,17 @@ const displayName = categoryDisplayNames[category] || category.split('-').map(w 
         return (
           <article 
             id={`model-${modelSlug}`}
-            class="bg-paper-alt border border-line rounded-lg p-6 flex flex-col justify-between hover:border-emerald/45 shadow-[0_4px_12px_rgba(0,0,0,0.01)] transition-colors"
+            class="bg-paper-alt border border-line rounded-lg p-6 flex flex-col justify-between hover:border-emerald/45 transition-colors"
+            style="box-shadow: 0 4px 12px var(--theme-shadow);"
           >
             <div>
               <div class="flex items-start justify-between gap-4 mb-4">
                 <div class="flex items-center gap-3">
                   {model.data.logo && (
-                    <div class="w-12 h-12 rounded bg-paper border border-line p-2 flex items-center justify-center shrink-0">
+                    <div class="logo-box w-12 h-12">
                       <img 
                         src={model.data.logo} 
                         alt={`${model.data.title} brand mark`} 
-                        class="w-full h-full object-contain"
                         loading="lazy"
                       />
                     </div>
@@ -124,7 +124,10 @@ const displayName = categoryDisplayNames[category] || category.split('-').map(w 
             <div class="border-t border-line pt-4">
               <a 
                 href={`/${category}/${modelSlug}`} 
-                class="w-full inline-flex items-center justify-center gap-1.5 border border-line bg-paper px-4 py-2 rounded font-mono text-xs uppercase tracking-[0.15em] hover:bg-emerald hover:text-white hover:border-emerald transition-all no-underline shadow-sm"
+                class="w-full inline-flex items-center justify-center gap-1.5 border border-line bg-paper px-4 py-2 rounded font-mono text-xs uppercase tracking-[0.15em] hover:bg-emerald hover:border-emerald transition-all no-underline"
+                style="box-shadow: 0 1px 3px var(--theme-shadow); color: var(--theme-ink);"
+                onmouseenter="this.style.color='var(--theme-btn-hover-text)'"
+                onmouseleave="this.style.color='var(--theme-ink)'"
               >
                 <span>Read Full Review</span> <span class="inline-block translate-y-[0.5px] font-sans">→</span>
               </a>

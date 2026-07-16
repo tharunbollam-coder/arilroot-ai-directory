@@ -41,7 +41,10 @@ const categoryDescriptions: Record<string, string> = {
     <div class="mt-10 flex justify-center">
       <a
         href="#categories"
-        class="inline-flex items-center gap-2 border border-line bg-paper-alt px-6 py-3 rounded font-mono text-xs uppercase tracking-[0.15em] hover:bg-emerald hover:text-white hover:border-emerald transition-all no-underline shadow-sm"
+        class="inline-flex items-center gap-2 border border-line bg-paper-alt px-6 py-3 rounded font-mono text-xs uppercase tracking-[0.15em] hover:bg-emerald hover:border-emerald transition-all no-underline"
+        style="box-shadow: 0 1px 3px var(--theme-shadow); --tw-text-opacity:1; color: var(--theme-ink);"
+        onmouseenter="this.style.color='var(--theme-btn-hover-text)'"
+        onmouseleave="this.style.color='var(--theme-ink)'"
       >
         Explore Directories <span class="inline-block translate-y-[0.5px] font-sans">↓</span>
       </a>
@@ -69,7 +72,7 @@ const categoryDescriptions: Record<string, string> = {
         const count = allModels.filter(m => m.data.category === category).length;
 
         return (
-          <div class="bg-paper-alt border border-line rounded-lg p-6 flex flex-col justify-between min-h-[18rem] hover:border-emerald/45 shadow-[0_4px_12px_rgba(0,0,0,0.015)] transition-colors">
+          <div class="bg-paper-alt border border-line rounded-lg p-6 flex flex-col justify-between min-h-[18rem] hover:border-emerald/45 transition-colors" style="box-shadow: 0 4px 12px var(--theme-shadow);">
             <div>
               <div class="flex items-center justify-between mb-5">
                 <div class="p-2 bg-emerald-light rounded text-emerald">
@@ -106,7 +109,10 @@ const categoryDescriptions: Record<string, string> = {
             <div class="border-t border-line pt-4">
               <a
                 href={`/${category}`}
-                class="w-full inline-flex items-center justify-center gap-1.5 border border-line bg-paper px-4 py-2.5 rounded font-mono text-xs uppercase tracking-[0.15em] hover:bg-emerald hover:text-white hover:border-emerald transition-all no-underline shadow-sm"
+                class="w-full inline-flex items-center justify-center gap-1.5 border border-line bg-paper px-4 py-2.5 rounded font-mono text-xs uppercase tracking-[0.15em] hover:bg-emerald hover:border-emerald transition-all no-underline"
+                style="box-shadow: 0 1px 3px var(--theme-shadow); color: var(--theme-ink);"
+                onmouseenter="this.style.color='var(--theme-btn-hover-text)'"
+                onmouseleave="this.style.color='var(--theme-ink)'"
               >
                 <span>Explore Category</span> <span class="inline-block translate-y-[0.5px] font-sans">→</span>
               </a>

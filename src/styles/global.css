@@ -1,23 +1,69 @@
 @import "tailwindcss";
+
 /* ═══════════════════════════════════════════════
-   Design System Tokens — Warm Stone / Indigo / Ochre / Wine Palette
+   CSS Custom Properties — Dual Theme System
+   Light (default) + Dark (data-theme="dark")
+   ═══════════════════════════════════════════════ */
+
+/* ── Light Theme (Default) ── */
+:root {
+  --theme-paper:         #F8F9FA;
+  --theme-paper-alt:     #FFFFFF;
+  --theme-ink:           #1A1D20;
+  --theme-ink-soft:      #495057;
+  --theme-emerald:       #125E46;
+  --theme-emerald-light: #E8F5E9;
+  --theme-gold:          #9A6A0B;
+  --theme-brick:         #C53030;
+  --theme-line:          #E2E5E9;
+  --theme-shadow:        rgba(0, 0, 0, 0.04);
+  --theme-grid:          rgba(0, 0, 0, 0.018);
+  --theme-stamp-shadow:  rgba(154, 106, 11, 0.08);
+  --theme-stamp-dashed:  rgba(154, 106, 11, 0.35);
+  --theme-logo-bg:       #FFFFFF;
+  --theme-logo-border:   #E2E5E9;
+  --theme-btn-hover-text:#FFFFFF;
+}
+
+/* ── Dark Theme ── */
+[data-theme="dark"] {
+  --theme-paper:         #0C1017;
+  --theme-paper-alt:     #151A24;
+  --theme-ink:           #E0E4EA;
+  --theme-ink-soft:      #8B95A5;
+  --theme-emerald:       #4FD68B;
+  --theme-emerald-light: #132A1E;
+  --theme-gold:          #E0A940;
+  --theme-brick:         #EF6B6B;
+  --theme-line:          #1F2735;
+  --theme-shadow:        rgba(0, 0, 0, 0.30);
+  --theme-grid:          rgba(255, 255, 255, 0.012);
+  --theme-stamp-shadow:  rgba(224, 169, 64, 0.12);
+  --theme-stamp-dashed:  rgba(224, 169, 64, 0.35);
+  --theme-logo-bg:       #FFFFFF;
+  --theme-logo-border:   #E2E5E9;
+  --theme-btn-hover-text:#0C1017;
+}
+
+/* ═══════════════════════════════════════════════
+   Tailwind v4 @theme — Maps CSS vars to utilities
    ═══════════════════════════════════════════════ */
 @theme {
-  /* ── Rich Jewel-Tone Palette (Indigo + Ochre + Wine) ── */
-  --color-paper: #f6f4f0; /* Primary background - warm stone off-white */
-  --color-paper-alt: #ebe6df; /* Cards/panels surface - deeper warm stone, lifted off pure white */
-  --color-ink: #1e2130; /* Primary text - deep indigo-charcoal */
-  --color-ink-soft: #55596c; /* Secondary text - muted indigo-gray */
-  --color-emerald: #2f3e8c; /* Primary accent - rich saturated indigo (same variable, new hue) */
-  --color-emerald-light: #e2e5f6; /* Muted accent tint - same hue family as indigo */
-  --color-gold: #a8681b; /* Secondary accent - rich saturated ochre, passes AA for normal text */
-  --color-brick: #8a2c46; /* Deep saturated wine for cons / warnings */
-  --color-line: #ddd6cd; /* Subtle structural separators - warm stone neutral gray */
-  /* ── Typography ── */
+  --color-paper:         var(--theme-paper);
+  --color-paper-alt:     var(--theme-paper-alt);
+  --color-ink:           var(--theme-ink);
+  --color-ink-soft:      var(--theme-ink-soft);
+  --color-emerald:       var(--theme-emerald);
+  --color-emerald-light: var(--theme-emerald-light);
+  --color-gold:          var(--theme-gold);
+  --color-brick:         var(--theme-brick);
+  --color-line:          var(--theme-line);
+
   --font-display: "Fraunces", Georgia, serif;
-  --font-body: "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+  --font-body:    "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono:    "IBM Plex Mono", "Courier New", monospace;
 }
+
 /* ═══════════════════════════════════════════════
    Base Layer
    ═══════════════════════════════════════════════ */
@@ -25,44 +71,48 @@
   body {
     @apply bg-paper text-ink font-body antialiased min-h-screen;
     background-image:
-      linear-gradient(to right, rgba(0, 0, 0, 0.015) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+      linear-gradient(to right,  var(--theme-grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--theme-grid) 1px, transparent 1px);
     background-size: 32px 32px;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
+
   p {
     @apply text-ink-soft;
     line-height: 1.7;
   }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+
+  h1, h2, h3, h4, h5, h6 {
     @apply text-ink font-display font-medium;
   }
+
   ::selection {
     @apply bg-emerald-light text-ink;
   }
 }
+
 /* ═══════════════════════════════════════════════
-   Component Layer — Stamp & Reskinned DS Components
+   Component Layer
    ═══════════════════════════════════════════════ */
 @layer components {
-  /* Stamp rating badge rotated with inset borders */
+
+  /* Rating Stamp — rotated with dashed inset */
   .stamp {
     @apply relative inline-flex flex-col items-center justify-center
            px-[1.15rem] py-[0.65rem] border border-gold rounded-lg text-center
-           bg-paper shadow-[0_4px_12px_rgba(0,0,0,0.02)];
+           bg-paper-alt;
+    box-shadow: 0 4px 16px var(--theme-stamp-shadow);
     transform: rotate(-2deg);
   }
   .stamp::before {
     content: "";
     position: absolute;
     inset: 3px;
-    border: 1px dashed rgba(168, 104, 27, 0.35);
+    border: 1px dashed var(--theme-stamp-dashed);
     border-radius: 5px;
   }
+
+  /* Section heading marker */
   .section-marker {
     @apply flex items-center gap-3;
   }
@@ -70,17 +120,54 @@
     content: "§";
     @apply font-mono text-emerald text-sm font-semibold shrink-0;
   }
+
+  /* Eyebrow label */
   .eyebrow {
     @apply font-mono text-xs uppercase tracking-[0.25em] text-emerald;
   }
+
+  /* Tag pill */
   .tag-pill {
     @apply inline-flex items-center font-mono text-[11px] uppercase
            tracking-wide bg-paper border border-line rounded px-2.5 py-1 text-ink-soft;
   }
+
+  /* Callout block */
   .callout-block {
-    @apply border-l-4 border-emerald bg-paper-alt rounded-r-lg p-6 sm:p-8 shadow-sm;
+    @apply border-l-4 border-emerald bg-paper-alt rounded-r-lg p-6 sm:p-8;
+    box-shadow: inset 0 0 8px var(--theme-shadow);
   }
+
+  /* Cards */
   .ds-card {
-    @apply bg-paper-alt border border-line rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.01)];
+    @apply bg-paper-alt border border-line rounded-lg;
+    box-shadow: 0 4px 12px var(--theme-shadow);
+  }
+
+  /* Logo containers — always a clean white bg so logos are legible in both themes */
+  .logo-box {
+    background-color: var(--theme-logo-bg);
+    border-color: var(--theme-logo-border);
+    @apply rounded border p-2 flex items-center justify-center shrink-0;
+  }
+  .logo-box img {
+    @apply w-full h-full object-contain;
+  }
+
+  /* Theme toggle button */
+  .theme-toggle {
+    @apply relative inline-flex items-center justify-center
+           w-9 h-9 rounded-lg border border-line bg-paper-alt
+           text-ink-soft hover:text-emerald
+           transition-all cursor-pointer;
+    box-shadow: 0 1px 3px var(--theme-shadow);
+  }
+  .theme-toggle:focus-visible {
+    @apply outline-none ring-2 ring-emerald ring-offset-2;
+    --tw-ring-offset-color: var(--theme-paper);
+  }
+  .theme-toggle svg {
+    @apply w-[18px] h-[18px];
+    transition: transform 0.3s ease, opacity 0.2s ease;
   }
 }
