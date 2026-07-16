@@ -1,116 +1,86 @@
 @import "tailwindcss";
-
+/* ═══════════════════════════════════════════════
+   Design System Tokens — Warm Stone / Indigo / Ochre / Wine Palette
+   ═══════════════════════════════════════════════ */
 @theme {
-    --font-serif: "Fraunces", "Merriweather", Georgia, serif;
-    --font-sans: "Inter", system-ui, sans-serif;
-
-    --color-alabaster: #FAF8F5;
-    --color-charcoal: #292524;
-    --color-stone-line: #E7E5E4;
-    --color-executive-blue: #1E3A8A;
+  /* ── Rich Jewel-Tone Palette (Indigo + Ochre + Wine) ── */
+  --color-paper: #f6f4f0; /* Primary background - warm stone off-white */
+  --color-paper-alt: #ebe6df; /* Cards/panels surface - deeper warm stone, lifted off pure white */
+  --color-ink: #1e2130; /* Primary text - deep indigo-charcoal */
+  --color-ink-soft: #55596c; /* Secondary text - muted indigo-gray */
+  --color-emerald: #2f3e8c; /* Primary accent - rich saturated indigo (same variable, new hue) */
+  --color-emerald-light: #e2e5f6; /* Muted accent tint - same hue family as indigo */
+  --color-gold: #a8681b; /* Secondary accent - rich saturated ochre, passes AA for normal text */
+  --color-brick: #8a2c46; /* Deep saturated wine for cons / warnings */
+  --color-line: #ddd6cd; /* Subtle structural separators - warm stone neutral gray */
+  /* ── Typography ── */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
 }
-
+/* ═══════════════════════════════════════════════
+   Base Layer
+   ═══════════════════════════════════════════════ */
 @layer base {
-    body {
-        background-color: var(--color-alabaster);
-        color: var(--color-charcoal);
-        font-family: var(--font-sans);
-    }
-
-    /* Highly optimized reading sizes for long-form content */
-    p,
-    main p {
-        font-size: 16.5px;
-        line-height: 1.8;
-        color: #44403C;
-        /* stone-700 for softer reading */
-    }
-
-    @media (min-width: 640px) {
-
-        p,
-        main p {
-            font-size: 15.5px;
-            line-height: 1.75;
-        }
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        color: #1C1917;
-        /* stone-900 */
-    }
+  body {
+    @apply bg-paper text-ink font-body antialiased min-h-screen;
+    background-image:
+      linear-gradient(to right, rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  p {
+    @apply text-ink-soft;
+    line-height: 1.7;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-ink font-display font-medium;
+  }
+  ::selection {
+    @apply bg-emerald-light text-ink;
+  }
 }
-
-/* 
-  Executive UI Components 
-  Shadows represent physical stacked paper, not interactive buttons.
-*/
-
-.executive-card {
-    background-color: #FFFFFF;
-    border: 1px solid #D6D3D1;
-    /* stone-300 */
-    border-radius: 12px;
-    /* Sharp, static, low-opacity shadow for an architectural feel */
-    box-shadow: 6px 6px 0px 0px rgba(28, 25, 23, 0.06);
-}
-
-.executive-nested-card {
-    background-color: #FCFBF9;
-    border: 1px solid #E7E5E4;
-    /* stone-200 */
-    border-radius: 8px;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    /* simple drop shadow */
-}
-
-.executive-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-sans);
-    font-weight: 600;
-    border-radius: 8px;
-    background-color: #1C1917;
-    /* stone-900 */
-    color: #FFFFFF;
-    padding: 0.75rem 1.5rem;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.executive-btn:hover {
-    background-color: #292524;
-    /* stone-800 */
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.executive-badge {
-    display: inline-block;
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    padding: 0.25rem 0.75rem;
-    border: 1px solid #E7E5E4;
-    border-radius: 9999px;
-    /* full pill shape */
-    background-color: #F5F5F4;
-    /* stone-100 */
-    color: #57534E;
-    /* stone-500 */
-}
-
-.executive-badge-primary {
-    background-color: var(--color-executive-blue);
-    color: #FFFFFF;
-    border-color: var(--color-executive-blue);
+/* ═══════════════════════════════════════════════
+   Component Layer — Stamp & Reskinned DS Components
+   ═══════════════════════════════════════════════ */
+@layer components {
+  /* Stamp rating badge rotated with inset borders */
+  .stamp {
+    @apply relative inline-flex flex-col items-center justify-center
+           px-[1.15rem] py-[0.65rem] border border-gold rounded-lg text-center
+           bg-paper shadow-[0_4px_12px_rgba(0,0,0,0.02)];
+    transform: rotate(-2deg);
+  }
+  .stamp::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border: 1px dashed rgba(168, 104, 27, 0.35);
+    border-radius: 5px;
+  }
+  .section-marker {
+    @apply flex items-center gap-3;
+  }
+  .section-marker::before {
+    content: "§";
+    @apply font-mono text-emerald text-sm font-semibold shrink-0;
+  }
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.25em] text-emerald;
+  }
+  .tag-pill {
+    @apply inline-flex items-center font-mono text-[11px] uppercase
+           tracking-wide bg-paper border border-line rounded px-2.5 py-1 text-ink-soft;
+  }
+  .callout-block {
+    @apply border-l-4 border-emerald bg-paper-alt rounded-r-lg p-6 sm:p-8 shadow-sm;
+  }
+  .ds-card {
+    @apply bg-paper-alt border border-line rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.01)];
+  }
 }

@@ -38,39 +38,35 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
   title={`${model.data.title} Review & Detailed Analysis - ArilRoot`}
   description={model.data.description}
 >
-  <!-- Main layout wrapper with unified narrow column for perfect vertical alignment -->
-  <div class="py-6 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+  <div class="container mx-auto max-w-4xl px-6 py-12">
     
-    <!-- Layer 1 (Top): Breadcrumbs (Freely floating outside the card container) -->
-    <nav class="flex mb-4 sm:mb-6 font-sans text-[9px] sm:text-[11px] uppercase tracking-wider sm:tracking-[0.2em] text-gray-400 overflow-x-auto whitespace-nowrap scrollbar-none pb-1" aria-label="Breadcrumb">
-      <ol class="inline-flex items-center flex-nowrap whitespace-nowrap gap-y-1">
+    <!-- Breadcrumb (mono uppercase eyebrow style) -->
+    <nav class="flex mb-6 overflow-x-auto whitespace-nowrap pb-1" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center flex-nowrap font-mono text-xs uppercase tracking-[0.15em] text-ink-soft">
         <li class="inline-flex items-center">
-          <a href="/" class="hover:text-black transition-colors">Home</a>
+          <a href="/" class="hover:text-emerald transition-colors no-underline">Home</a>
         </li>
         <li>
-          <div class="flex items-center">
-            <svg class="w-3.5 h-3.5 mx-2 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-            <a href={`/${model.data.category}`} class="hover:text-black transition-colors">{categoryDisplayName}</a>
-          </div>
+          <span class="mx-2 text-line select-none">·</span>
         </li>
         <li>
-          <div class="flex items-center min-w-0">
-            <svg class="w-3.5 h-3.5 mx-2 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-            <span class="text-gray-500 truncate max-w-[120px] sm:max-w-none">{model.data.title}</span>
-          </div>
+          <a href={`/${model.data.category}`} class="hover:text-emerald transition-colors no-underline">{categoryDisplayName}</a>
+        </li>
+        <li>
+          <span class="mx-2 text-line select-none">·</span>
+        </li>
+        <li>
+          <span class="text-ink truncate max-w-[140px] sm:max-w-none">{model.data.title}</span>
         </li>
       </ol>
     </nav>
 
-    <!-- Unified Hero Card Section Container -->
-    <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 border border-gray-100 shadow-sm mb-8">
-      
-      <!-- Layer 2 (Middle): Action Row -->
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6">
-        <!-- Left Side (Branding Info) -->
-        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+    <!-- Top / Hero Section (Clean Light Boxed Layout with fitted description) -->
+    <header class="bg-paper-alt border border-line rounded-lg p-6 sm:p-10 mb-14 shadow-[0_4px_12px_rgba(0,0,0,0.01)]">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8">
+        <div class="flex items-center gap-4">
           {model.data.logo && (
-            <div class="w-16 h-16 rounded-2xl border border-gray-100 bg-gray-50 p-2 overflow-hidden shrink-0 flex items-center justify-center shadow-xs">
+            <div class="w-14 h-14 rounded bg-paper border border-line p-2 flex items-center justify-center shrink-0">
               <img 
                 src={model.data.logo} 
                 alt={`${model.data.title} brand mark`} 
@@ -79,117 +75,143 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
             </div>
           )}
           <div>
-            <div class="flex flex-wrap items-center gap-2 mb-1.5">
-              <span class="inline-block font-sans font-bold text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-100">
-                {categoryDisplayName}
-              </span>
-              <span class="font-sans text-[10px] text-gray-400 font-medium uppercase tracking-wider">
-                by {model.data.creator}
-              </span>
-            </div>
-            <h1 class="font-serif text-3xl sm:text-4xl font-bold text-black tracking-tight leading-tight">
-              {model.data.title}
-            </h1>
+            <h1 class="font-display font-medium text-4xl sm:text-5xl tracking-tight text-ink leading-tight">{model.data.title}</h1>
+            <p class="font-mono text-xs uppercase tracking-wide text-ink-soft mt-1">by {model.data.creator}</p>
           </div>
         </div>
 
-        <!-- Right Side (CTA) -->
+        {model.data.editorsReview && (
+          <div class="flex shrink-0">
+            <div class="stamp">
+              <span class="font-display text-2xl font-semibold text-gold">{model.data.editorsReview.rating}</span>
+              <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-ink-soft mt-0.5">Editor's Pick</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- Fitted Model Description -->
+      <div class="mt-6 pt-6 border-t border-line">
+        <p class="font-display italic text-lg sm:text-xl text-ink-soft leading-relaxed max-w-3xl">
+          "{model.data.description}"
+        </p>
+      </div>
+
+      <!-- Custom Tags / Links (Redesigned Visit Site as Button) -->
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        {model.data.pricingTier === 'Free' && (
+          <span class="font-mono text-[11px] uppercase tracking-wide border border-emerald/30 text-emerald bg-emerald-light rounded px-2.5 py-1">Free Tier Available</span>
+        )}
+        {model.data.pricingTier === 'Freemium' && (
+          <span class="font-mono text-[11px] uppercase tracking-wide border border-emerald/30 text-emerald bg-emerald-light rounded px-2.5 py-1">Freemium Tier</span>
+        )}
+        {model.data.pricingTier === 'Paid' && (
+          <span class="font-mono text-[11px] uppercase tracking-wide border border-line text-ink-soft bg-paper rounded px-2.5 py-1">Paid Tier</span>
+        )}
         {model.data.officialLink && (
           <a 
             href={model.data.officialLink} 
             target="_blank" 
-            rel="noopener noreferrer" 
-            class="bg-black text-white font-sans text-[10px] sm:text-xs font-bold uppercase tracking-widest px-5 py-3 sm:px-6 sm:py-4 rounded-xl hover:opacity-90 transition flex-shrink-0 text-center"
+            rel="noopener" 
+            class="inline-flex items-center gap-1.5 border border-line bg-paper text-emerald hover:bg-emerald hover:text-white hover:border-emerald px-4 py-2 rounded font-mono text-xs uppercase tracking-wide transition-all no-underline shadow-sm"
           >
-            Visit Official Site &rarr;
+            <span>Visit Site</span> <span class="inline-block translate-y-[-0.5px] font-sans text-xs">↗</span>
           </a>
         )}
       </div>
+    </header>
 
-      <!-- Layer 3 (Bottom): Core Description -->
-      <div class="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-100">
-        <p class="text-gray-600 font-sans text-base leading-relaxed max-w-4xl">
-          {model.data.description}
-        </p>
-      </div>
-    </div>
-
-    <!-- Main Content Cards Stack -->
-    <div class="space-y-8">
+    <!-- Main Content Stack (Single-Column Only) -->
+    <div class="space-y-16">
       
-      <!-- Introduction section -->
+      <!-- Introduction -->
       {model.data.introduction && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-5">Introduction</h2>
-          <p class="text-stone-700 leading-relaxed font-normal">{model.data.introduction}</p>
+        <section id="introduction">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Introduction</h2>
+          </div>
+          <p class="text-ink-soft leading-relaxed">{model.data.introduction}</p>
         </section>
       )}
 
-      <!-- How It Works section -->
+      <!-- How It Works -->
       {model.data.howItWorks && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-5">How It Works</h2>
-          <p class="text-stone-700 leading-relaxed font-normal">{model.data.howItWorks}</p>
+        <section id="how-it-works">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">How It Works</h2>
+          </div>
+          <p class="text-ink-soft leading-relaxed">{model.data.howItWorks}</p>
         </section>
       )}
 
-      <!-- Best For section -->
+      <!-- Target Audience & Intent (Best For) -->
       {model.data.bestFor && (model.data.bestFor.who || model.data.bestFor.what) && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Target Audience & Intent</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section id="best-for">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Target Audience &amp; Intent</h2>
+          </div>
+          <div class="bg-paper-alt border border-line rounded-lg p-6 space-y-5 shadow-[0_4px_12px_rgba(0,0,0,0.01)]">
             {model.data.bestFor.who && (
-              <div class="executive-nested-card p-6 border-stone-200">
-                <h3 class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 mb-3">Ideal User Profiles</h3>
-                <p class="text-stone-700 text-sm leading-relaxed">{model.data.bestFor.who}</p>
+              <div>
+                <p class="font-mono text-[11px] uppercase tracking-[0.15em] text-emerald mb-1.5 font-medium">Ideal User Profiles</p>
+                <p class="text-sm text-ink-soft leading-relaxed">{model.data.bestFor.who}</p>
               </div>
+            )}
+            {model.data.bestFor.who && model.data.bestFor.what && (
+              <div class="h-px bg-line"></div>
             )}
             {model.data.bestFor.what && (
-              <div class="executive-nested-card p-6 border-stone-200">
-                <h3 class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 mb-3">Primary Workloads</h3>
-                <p class="text-stone-700 text-sm leading-relaxed">{model.data.bestFor.what}</p>
+              <div>
+                <p class="font-mono text-[11px] uppercase tracking-[0.15em] text-emerald mb-1.5 font-medium">Primary Workloads</p>
+                <p class="text-sm text-ink-soft leading-relaxed">{model.data.bestFor.what}</p>
               </div>
             )}
           </div>
         </section>
       )}
 
-      <!-- Top Features section -->
+      <!-- Top Features -->
       {model.data.topFeatures && model.data.topFeatures.length > 0 && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Key Capabilities</h2>
-          <div class="space-y-6">
+        <section id="features" class="scroll-mt-24">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Top Features</h2>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {model.data.topFeatures.map((feature) => (
-              <div class="border-l-[3px] border-stone-300 pl-4">
-                <h3 class="font-serif text-lg font-bold text-stone-900 mb-1">{feature.title}</h3>
-                <p class="text-stone-700 text-sm leading-relaxed">{feature.details}</p>
+              <div class="border border-line rounded-lg p-5 bg-paper-alt/60 shadow-[0_4px_12px_rgba(0,0,0,0.005)]">
+                <span class="inline-block h-2 w-2 bg-emerald rounded-sm mb-3"></span>
+                <p class="font-display text-lg text-ink mb-2">{feature.title}</p>
+                <p class="text-sm text-ink-soft leading-relaxed">{feature.details}</p>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      <!-- ========================================== -->
-      <!-- NEW: Prompting Techniques (Placed Before Pricing) -->
-      <!-- ========================================== -->
+      <!-- Prompting Techniques -->
       {model.data.promptTechniques && model.data.promptTechniques.length > 0 && (
-        <section class="executive-card bg-stone-50 border-stone-200 p-6 sm:p-8 md:p-10 shadow-sm">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6 flex items-center gap-2">
-            <svg class="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            Mastery Prompting Techniques
-          </h2>
-          <div class="space-y-8">
+        <section id="prompting-tips" class="scroll-mt-24">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Prompting Techniques</h2>
+          </div>
+          <div class="space-y-6">
             {model.data.promptTechniques.map((tech) => (
-              <div class="border-b border-stone-200 last:border-0 pb-8 last:pb-0">
-                <h3 class="font-sans text-lg font-bold text-stone-900">{tech.title}</h3>
-                <p class="text-stone-600 font-sans text-sm mt-2 mb-4 leading-relaxed">
-                  <span class="font-bold text-stone-800">The Friction:</span> {tech.concept}
-                </p>
-                <div class="bg-stone-900 text-stone-100 p-5 rounded-xl font-mono text-xs sm:text-sm leading-relaxed shadow-inner">
-                  <span class="text-stone-400 block font-sans font-bold uppercase tracking-[0.15em] text-[10px] mb-2 border-b border-stone-700 pb-2">The Correct Workflow:</span>
-                  {tech.workflow}
+              <div class="border border-line bg-paper-alt/40 rounded-lg p-6">
+                <p class="font-display text-lg text-ink mb-3">{tech.title}</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <p class="font-mono text-[11px] uppercase tracking-[0.15em] text-emerald mb-1">Concept</p>
+                    <p class="text-sm text-ink-soft leading-relaxed">{tech.concept}</p>
+                  </div>
+                  <div>
+                    <p class="font-mono text-[11px] uppercase tracking-[0.15em] text-emerald mb-1">Workflow</p>
+                    <p class="text-sm text-ink-soft leading-relaxed">{tech.workflow}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -197,254 +219,252 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
         </section>
       )}
 
-      <!-- Pricing Plans section -->
+      <!-- Pricing (Redesigned Pricing Link as Button) -->
       {model.data.pricing && (model.data.pricing.free || model.data.pricing.paid) && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-stone-100">
-            <h2 class="font-serif text-2xl font-bold text-stone-900">Pricing & Plans</h2>
-            {model.data.pricing.startingPrice && (
-              <div class="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-100 px-3.5 py-1.5 rounded-full shadow-sm">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
-                <span class="font-sans text-[10px] font-bold uppercase tracking-[0.1em] text-emerald-800">
-                  {model.data.pricing.startingPrice}
-                </span>
-              </div>
+        <section id="pricing" class="scroll-mt-24">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Pricing</h2>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <span class="font-display text-3xl text-ink">
+              {model.data.pricing.startingPrice || (model.data.pricingTier === 'Free' ? 'Free' : 'Premium Tiers')}
+            </span>
+            {model.data.pricing.pricingUrl && (
+              <a 
+                href={model.data.pricing.pricingUrl} 
+                target="_blank" 
+                rel="noopener" 
+                class="inline-flex items-center gap-1.5 border border-line bg-paper text-emerald hover:bg-emerald hover:text-white hover:border-emerald px-4 py-2 rounded font-mono text-xs uppercase tracking-wide font-medium transition-all no-underline shadow-sm"
+              >
+                <span>Full pricing details</span> <span class="inline-block translate-y-[-0.5px] font-sans text-xs">↗</span>
+              </a>
             )}
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {model.data.pricing.free && (
-              <div class="executive-nested-card p-6 border-stone-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-300">
-                <div class="flex-grow">
-                  <div class="flex items-center justify-between mb-4">
-                    <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-400">Free Tier</span>
-                    <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-stone-100 text-stone-600">Basic</span>
-                  </div>
-                  <div class="text-3xl font-bold text-stone-900 mb-4 font-serif tracking-tight">Free</div>
-                  <p class="text-stone-600 text-sm leading-relaxed">{model.data.pricing.free}</p>
-                </div>
+              <div class="border border-line rounded-lg p-5 bg-paper-alt/40">
+                <p class="font-mono text-xs uppercase tracking-[0.15em] text-emerald mb-2 font-medium">Free Option</p>
+                <p class="text-ink-soft leading-relaxed text-sm">{model.data.pricing.free}</p>
               </div>
             )}
             {model.data.pricing.paid && (
-              <div class="executive-nested-card p-6 border-stone-200 bg-stone-50/50 flex flex-col justify-between transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-stone-300 border-t-stone-800 border-t-2">
-                <div class="flex-grow">
-                  <div class="flex items-center justify-between mb-4">
-                    <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500">Paid Tiers</span>
-                    <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 font-semibold">Pro Options</span>
-                  </div>
-                  <div class="text-3xl font-bold text-stone-900 mb-4 font-serif tracking-tight">
-                    Premium Tier
-                  </div>
-                  <p class="text-stone-600 text-sm leading-relaxed mb-6">{model.data.pricing.paid}</p>
-                </div>
-                {model.data.pricing.pricingUrl && (
-                  <a 
-                    href={model.data.pricing.pricingUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    class="w-full inline-flex items-center justify-center font-sans text-xs font-bold uppercase tracking-wider text-white bg-stone-900 hover:bg-stone-800 px-4 py-2.5 rounded-lg transition-colors border border-stone-800 shadow-sm text-center"
-                  >
-                    View Official Pricing &rarr;
-                  </a>
-                )}
+              <div class="border border-line rounded-lg p-5 bg-paper-alt/40">
+                <p class="font-mono text-xs uppercase tracking-[0.15em] text-gold mb-2 font-medium">Paid Plans</p>
+                <p class="text-ink-soft leading-relaxed text-sm">{model.data.pricing.paid}</p>
               </div>
             )}
           </div>
         </section>
       )}
 
-      <!-- Model Varieties section -->
+      <!-- Model Varieties / Tiers -->
       {model.data.modelVariants && model.data.modelVariants.length > 0 && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Model Varieties</h2>
-          <div class="space-y-6">
+        <section id="models" class="scroll-mt-24">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Model Tiers</h2>
+          </div>
+          <div class="space-y-4">
             {model.data.modelVariants.map((variant) => (
-              <div class="border-b border-stone-100 pb-6 last:border-0 last:pb-0">
-                <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
-                  <h3 class="font-serif text-lg font-bold text-stone-900">{variant.name}</h3>
-                  <div>
-                    {variant.freeTier ? (
-                      <span class="executive-badge executive-badge-primary">Free Tier (Limits Apply)</span>
-                    ) : (
-                      <span class="executive-badge">Paid Variant</span>
-                    )}
-                  </div>
+              <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 border border-line bg-paper-alt/30 rounded-lg p-5 hover:border-emerald/45 shadow-[0_4px_12px_rgba(0,0,0,0.005)] transition-colors">
+                <div class="sm:w-48 shrink-0 flex items-center gap-3">
+                  <span class={`h-2 w-2 rounded-full ${variant.freeTier ? 'bg-emerald shadow-[0_0_8px_rgba(18,94,70,0.3)]' : 'bg-gold shadow-[0_0_8px_rgba(154,106,11,0.3)]'}`}></span>
+                  <p class="font-display text-lg text-ink">{variant.name}</p>
                 </div>
-                <p class="text-stone-700 text-sm leading-relaxed font-normal">
-                  {variant.details}
-                </p>
+                <p class="text-sm text-ink-soft leading-relaxed flex-1">{variant.details}</p>
+                <span class={`font-mono text-[10px] uppercase tracking-wide border rounded px-2.5 py-1 shrink-0 w-fit ${variant.freeTier ? 'border-emerald/30 text-emerald bg-emerald-light' : 'border-line text-ink-soft bg-paper'}`}>
+                  {variant.freeTier ? 'Free Tier' : 'Paid Plans'}
+                </span>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      <!-- Access Platforms section -->
+      <!-- Access Points -->
       {model.data.accessPlatforms && model.data.accessPlatforms.length > 0 && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Access Points</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <section id="access-points">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Access Points</h2>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {model.data.accessPlatforms.map((platform) => (
-              <div class="executive-nested-card p-5 border-stone-200">
-                <h3 class="font-serif font-bold text-stone-900 text-base mb-1.5">{platform.name}</h3>
-                <p class="text-stone-600 text-xs leading-relaxed font-medium">{platform.details}</p>
+              <div class="border border-line rounded-lg p-5 bg-paper-alt/40">
+                <p class="font-display text-lg text-ink mb-1">{platform.name}</p>
+                <p class="text-sm text-ink-soft leading-relaxed">{platform.details}</p>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      <!-- Use Cases section -->
+      <!-- Use Cases -->
       {model.data.useCases && model.data.useCases.length > 0 && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Use Cases</h2>
-          <div class="space-y-6">
-            {model.data.useCases.map((useCase) => (
-              <div class="border-b border-stone-100 pb-6 last:border-0 last:pb-0">
-                <h3 class="font-serif text-lg font-bold text-stone-900 mb-2">{useCase.title}</h3>
-                <p class="text-stone-700 text-sm leading-relaxed font-normal">{useCase.details}</p>
+        <section id="use-cases" class="scroll-mt-24">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Use Cases</h2>
+          </div>
+          <div class="space-y-5">
+            {model.data.useCases.map((useCase, idx) => (
+              <div class={`border-t border-line pt-5 ${idx === 0 ? 'first:border-t-0 first:pt-0' : ''}`}>
+                <p class="font-display text-lg text-ink mb-1">{useCase.title}</p>
+                <p class="text-sm text-ink-soft leading-relaxed">{useCase.details}</p>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      <!-- Quick Ideas section -->
+      <!-- Quick Prompt Ideas -->
       {model.data.quickIdeas && model.data.quickIdeas.length > 0 && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Quick Ideas</h2>
-          <ul class="list-none pl-0 space-y-3 text-stone-700 text-sm font-normal">
+        <section id="quick-ideas" class="scroll-mt-24">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Quick Prompt Ideas</h2>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {model.data.quickIdeas.map((idea) => (
-              <li class="leading-relaxed flex items-start gap-3 mb-2.5 last:mb-0">
-                <span class="text-stone-400 font-bold select-none mt-0.5">●</span>
-                <span>{idea}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      <!-- Pros and Cons section -->
-      {((model.data.pros && model.data.pros.length > 0) || (model.data.cons && model.data.cons.length > 0)) && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Pros & Cons</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Pros -->
-            {model.data.pros && model.data.pros.length > 0 && (
-              <div>
-                <h3 class="inline-flex items-center gap-2 font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full mb-6">
-                  <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-                  </svg>
-                  Strengths
-                </h3>
-                <ul class="space-y-4">
-                  {model.data.pros.map((pro) => (
-                    <li class="flex items-start gap-3">
-                      <span class="text-emerald-500 mt-0.5 text-xs">●</span>
-                      <span class="text-stone-700 text-sm leading-relaxed">{pro}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <!-- Cons -->
-            {model.data.cons && model.data.cons.length > 0 && (
-              <div>
-                <h3 class="inline-flex items-center gap-2 font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-rose-700 bg-rose-50 border border-rose-200 px-3 py-1.5 rounded-full mb-6">
-                  <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                  Weaknesses
-                </h3>
-                <ul class="space-y-4">
-                  {model.data.cons.map((con) => (
-                    <li class="flex items-start gap-3">
-                      <span class="text-rose-400 mt-0.5 text-xs">●</span>
-                      <span class="text-stone-700 text-sm leading-relaxed">{con}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        </section>
-      )}
-
-      <!-- Latest Updates section -->
-      {model.data.latestUpdates && model.data.latestUpdates.length > 0 && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Latest Updates</h2>
-          <div class="space-y-6">
-            {model.data.latestUpdates.map((update) => (
-              <div class="border-b border-stone-100 pb-6 last:border-0 last:pb-0">
-                <h3 class="font-serif text-lg font-bold text-stone-900 mb-2">{update.title}</h3>
-                <p class="text-stone-700 text-sm leading-relaxed font-normal">
-                  {update.details}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <!-- Alternatives section -->
-      {model.data.alternatives && model.data.alternatives.length > 0 && (
-        <section class="executive-card p-6 sm:p-8 md:p-10">
-          <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">Similar Alternatives</h2>
-          <div class="space-y-6">
-            {model.data.alternatives.map((alt) => (
-              <div class="border-b border-stone-100 pb-4 last:border-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div class="flex-grow">
-                  <h3 class="font-sans font-bold text-sm text-stone-900 mb-1.5">{alt.name}</h3>
-                  <p class="text-stone-700 text-sm leading-relaxed font-normal max-w-2xl">{alt.value}</p>
-                </div>
-                {alt.link && (
-                  <a 
-                    href={alt.link}
-                    class="shrink-0 inline-flex items-center justify-center font-sans text-xs font-bold uppercase tracking-wider text-black bg-white hover:bg-black hover:text-white px-4 py-2 rounded-lg transition-colors border border-gray-200 hover:border-black shadow-xs text-center min-w-[100px]"
+              <div class="border border-line rounded-lg p-5 bg-paper-alt flex flex-col justify-between shadow-sm">
+                <p class="font-mono text-sm leading-relaxed text-ink/90">"{idea}"</p>
+                <div class="mt-4 flex justify-end">
+                  <button 
+                    onclick="copyPrompt(this)" 
+                    data-text={idea} 
+                    class="inline-flex items-center justify-center font-mono text-[10px] uppercase tracking-widest text-ink-soft hover:text-emerald border border-line rounded px-2.5 py-1 transition-colors bg-paper/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald cursor-pointer shadow-[0_2px_4px_rgba(0,0,0,0.005)]"
                   >
-                    Compare &rarr;
-                  </a>
-                )}
+                    Copy
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         </section>
       )}
 
-      <!-- ========================================== -->
-      <!-- Editor's Review (Placed Last) -->
-      <!-- ========================================== -->
-      {model.data.editorsReview && (
-        <section class="executive-card p-6 sm:p-8 md:p-10 mt-12">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-stone-100">
-            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-stone-900 flex items-center gap-3">
-              <svg class="w-6 h-6 sm:w-8 sm:h-8 text-stone-700" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-              </svg>
-              Editor's Final Verdict
-            </h2>
-            <div class="inline-flex items-center gap-2 bg-stone-100 border border-stone-200 px-4 py-2 rounded-xl font-mono text-sm font-bold text-stone-800 shadow-xs">
-              Score: {model.data.editorsReview.rating}
+      <!-- Pros & Cons -->
+      {((model.data.pros && model.data.pros.length > 0) || (model.data.cons && model.data.cons.length > 0)) && (
+        <section id="pros-cons" class="scroll-mt-24">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Pros &amp; Cons</h2>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-0 border border-line bg-paper-alt/20 rounded-lg p-6 sm:p-8 shadow-[0_4px_12px_rgba(0,0,0,0.005)]">
+            <div class="sm:pr-8">
+              <p class="font-mono text-xs uppercase tracking-[0.15em] text-emerald font-semibold mb-4">Pros</p>
+              <ul class="space-y-3">
+                {model.data.pros.map((pro) => (
+                  <li class="flex gap-3 text-sm text-ink-soft">
+                    <span class="text-emerald font-mono font-bold">✓</span>
+                    <span>{pro}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="sm:pl-8 sm:border-l border-line">
+              <p class="font-mono text-xs uppercase tracking-[0.15em] text-brick font-semibold mb-4">Cons</p>
+              <ul class="space-y-3">
+                {model.data.cons.map((con) => (
+                  <li class="flex gap-3 text-sm text-ink-soft">
+                    <span class="text-brick font-mono font-bold">✕</span>
+                    <span>{con}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-          
-          <div class="mb-8">
-            <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 block mb-3">The Verdict</span>
-            <blockquote class="text-stone-800 text-lg sm:text-xl leading-relaxed font-serif italic border-l-[3px] border-stone-850 pl-4 py-1">
-              "{model.data.editorsReview.verdict}"
-            </blockquote>
+        </section>
+      )}
+
+      <!-- Latest Updates -->
+      {model.data.latestUpdates && model.data.latestUpdates.length > 0 && (
+        <section id="updates" class="scroll-mt-24">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Latest Updates</h2>
           </div>
-          
-          <div class="executive-nested-card p-6 border-stone-200 bg-stone-50/30">
-            <span class="font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-stone-500 block mb-3">Hands-On Testing Notes</span>
-            <p class="text-stone-700 text-sm leading-relaxed font-sans">
-              {model.data.editorsReview.handsOnNotes}
-            </p>
+          <div class="relative pl-6 border-l-2 border-line space-y-8">
+            {model.data.latestUpdates.map((update, idx) => (
+              <div class="relative">
+                <span class={`absolute -left-[29px] top-1 h-3 w-3 rounded-full border-2 border-paper ${idx === 0 ? 'bg-emerald shadow-[0_0_8px_rgba(18,94,70,0.2)]' : 'bg-line'}`}></span>
+                <p class="font-mono text-xs text-emerald uppercase tracking-[0.15em] mb-1 font-medium">Update Details</p>
+                <p class="font-display text-lg text-ink mb-1">{update.title}</p>
+                <p class="text-sm text-ink-soft leading-relaxed">{update.details}</p>
+              </div>
+            ))}
           </div>
+        </section>
+      )}
+
+      <!-- Alternatives -->
+      {model.data.alternatives && model.data.alternatives.length > 0 && (
+        <section id="alternatives" class="scroll-mt-24">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Alternatives Worth Considering</h2>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {model.data.alternatives.map((alt) => {
+              const TagName = alt.link ? 'a' : 'div';
+              return (
+                <TagName 
+                  href={alt.link} 
+                  class={`block border border-line rounded-lg p-6 bg-paper-alt/40 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald ${alt.link ? 'hover:border-emerald hover:bg-paper-alt/80 no-underline shadow-[0_4px_12px_rgba(0,0,0,0.01)]' : ''}`}
+                >
+                  <p class="font-display text-lg text-ink mb-2">{alt.name}</p>
+                  <p class="text-sm text-ink-soft leading-relaxed">{alt.value}</p>
+                  {alt.link && (
+                    <p class="mt-3 font-mono text-xs uppercase tracking-[0.15em] text-emerald flex items-center gap-1">
+                      <span>Compare instead</span> <span class="inline-block translate-y-[0.5px] font-sans">→</span>
+                    </p>
+                  )}
+                </TagName>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      <!-- Editor's Final Verdict -->
+      {model.data.editorsReview && (
+        <section id="editors-review" class="scroll-mt-24 border-l-4 border-emerald bg-paper-alt rounded-r-lg p-6 sm:p-8 shadow-sm">
+          <p class="font-mono text-xs uppercase tracking-[0.15em] text-emerald mb-3">The Editor's Take — {model.data.editorsReview.rating}</p>
+          <blockquote class="font-display italic text-xl sm:text-2xl text-ink leading-snug mb-5">
+            "{model.data.editorsReview.verdict}"
+          </blockquote>
+          <p class="text-ink-soft leading-relaxed font-body">
+            {model.data.editorsReview.handsOnNotes}
+          </p>
         </section>
       )}
 
     </div>
   </div>
+
+  <!-- Clipboard Copy Javascript -->
+  <script is:inline>
+    function copyPrompt(btn) {
+      const text = btn.getAttribute('data-text');
+      const original = btn.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          btn.textContent = 'Copied ✓';
+          btn.classList.add('text-emerald', 'border-emerald');
+          setTimeout(() => {
+            btn.textContent = original;
+            btn.classList.remove('text-emerald', 'border-emerald');
+          }, 1500);
+        }).catch(() => {
+          btn.textContent = 'Press Ctrl+C';
+          setTimeout(() => {
+            btn.textContent = original;
+          }, 1500);
+        });
+      }
+    }
+  </script>
 </Layout>

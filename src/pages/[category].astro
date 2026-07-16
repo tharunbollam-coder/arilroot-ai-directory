@@ -37,108 +37,97 @@ const displayName = categoryDisplayNames[category] || category.split('-').map(w 
   title={`${displayName} - ArilRoot AI Directory`}
   description={`Explore in-depth reviews, specifications, and comparison guides for the best ${displayName} AI models.`}
 >
-  <!-- Main layout wrapper with unified medium column for perfect vertical alignment -->
-  <div class="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+  <div class="container mx-auto max-w-6xl px-6 py-12">
     
-    <!-- Layer 1 (Top): Category Breadcrumbs (Freely floating outside the card container) -->
-    <nav class="flex mb-6 font-sans text-[11px] uppercase tracking-[0.2em] text-gray-400" aria-label="Breadcrumb">
-      <ol class="inline-flex flex-wrap items-center gap-y-2">
-        <li class="inline-flex items-center">
-          <a href="/" class="hover:text-black transition-colors">Home</a>
+    <!-- Breadcrumb -->
+    <nav class="flex mb-6" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-ink-soft">
+        <li>
+          <a href="/" class="hover:text-emerald transition-colors no-underline">Home</a>
         </li>
         <li>
-          <div class="flex items-center">
-            <svg class="w-3.5 h-3.5 mx-2 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-            <span class="text-gray-500">{displayName}</span>
-          </div>
+          <span class="text-line select-none">·</span>
+        </li>
+        <li>
+          <span class="text-ink">{displayName}</span>
         </li>
       </ol>
     </nav>
 
-    <!-- Unified Hero Card Section Container -->
-    <header class="bg-white rounded-3xl p-8 md:p-10 border border-gray-100 shadow-sm mb-8">
-      <!-- Layer 2 (Middle): Category Headers -->
-      <span class="text-[10px] font-sans font-bold uppercase tracking-widest text-gray-400 block mb-1">Category Directory</span>
-      <h1 class="font-serif text-4xl sm:text-5xl font-bold text-black mb-6 leading-tight">
+    <!-- Header Card -->
+    <header class="bg-paper-alt border border-line rounded-lg p-6 sm:p-10 mb-10 shadow-[0_4px_12px_rgba(0,0,0,0.01)]">
+      <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-3">Category Directory</p>
+      <h1 class="font-display font-medium text-4xl sm:text-5xl text-ink tracking-tight leading-none mb-6">
         {displayName}
       </h1>
-
-      <!-- Layer 3 (Bottom): Overview Copy -->
-      <div class="pt-6 border-t border-gray-100">
-        <p class="text-gray-600 font-sans text-base leading-relaxed max-w-4xl">
-          A hand-picked selection of the most powerful models in the <span class="font-bold text-black">{displayName}</span> ecosystem. Browse detailed capabilities, architectures, and full analysis sheets below.
+      <div class="pt-6 border-t border-line">
+        <p class="text-ink-soft leading-relaxed max-w-4xl font-display italic text-lg sm:text-xl">
+          "A hand-picked selection of the most powerful models in the {displayName} ecosystem. Browse detailed capabilities, architectures, and full analysis sheets below."
         </p>
       </div>
     </header>
 
-    <!-- List of Models in Category -->
-    <div class="space-y-8">
+    <!-- Model Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {models.map((model) => {
-        // Safe extraction of slug from ID (e.g. "text-models/chatgpt" -> "chatgpt")
         const modelSlug = model.id.split('/').pop();
         return (
           <article 
             id={`model-${modelSlug}`}
-            class="executive-card p-6 sm:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start"
+            class="bg-paper-alt border border-line rounded-lg p-6 flex flex-col justify-between hover:border-emerald/45 shadow-[0_4px_12px_rgba(0,0,0,0.01)] transition-colors"
           >
-            <!-- Model Logo -->
-            {model.data.logo && (
-              <div class="w-20 h-20 rounded-2xl overflow-hidden bg-white border border-stone-200 p-3 flex-shrink-0 flex items-center justify-center shadow-sm">
-                <img 
-                  src={model.data.logo} 
-                  alt={`${model.data.title} brand mark`} 
-                  class="w-full h-full object-contain"
-                  loading="lazy"
-                />
-              </div>
-            )}
-            
-            <!-- Details Column -->
-            <div class="flex-grow w-full">
-              <!-- Meta Row -->
-              <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-                <div class="flex flex-wrap items-center gap-3">
-                  <h2 class="font-serif text-2xl font-bold text-stone-900 hover:text-stone-600 transition-colors">
-                    <a href={`/${category}/${modelSlug}`}>{model.data.title}</a>
-                  </h2>
-                  <span class="executive-badge">
-                    by {model.data.creator}
-                  </span>
+            <div>
+              <div class="flex items-start justify-between gap-4 mb-4">
+                <div class="flex items-center gap-3">
+                  {model.data.logo && (
+                    <div class="w-12 h-12 rounded bg-paper border border-line p-2 flex items-center justify-center shrink-0">
+                      <img 
+                        src={model.data.logo} 
+                        alt={`${model.data.title} brand mark`} 
+                        class="w-full h-full object-contain"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <h2 class="font-display text-2xl text-ink leading-tight">
+                      <a href={`/${category}/${modelSlug}`} class="hover:text-emerald transition-colors no-underline">{model.data.title}</a>
+                    </h2>
+                    <p class="font-mono text-[11px] uppercase tracking-wide text-ink-soft mt-1 font-medium">by {model.data.creator}</p>
+                  </div>
                 </div>
-              </div>
 
-              <!-- Summary Description -->
-              <p class="text-stone-600 mb-6 leading-relaxed font-normal">
-                {model.data.description}
-              </p>
-
-              <!-- Footer Row -->
-              <div class="flex flex-wrap items-center justify-between gap-4 border-t border-stone-100 pt-5 mt-2">
                 <div class="flex gap-2">
                   {model.data.pricingTier === 'Free' && (
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <span class="font-mono text-[10px] uppercase tracking-wide border border-emerald/30 text-emerald bg-emerald-light rounded px-2.5 py-1">
                       Free
                     </span>
                   )}
                   {model.data.pricingTier === 'Freemium' && (
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200">
+                    <span class="font-mono text-[10px] uppercase tracking-wide border border-emerald/30 text-emerald bg-emerald-light rounded px-2.5 py-1">
                       Freemium
                     </span>
                   )}
                   {model.data.pricingTier === 'Paid' && (
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-stone-50 text-stone-500 border border-stone-200">
+                    <span class="font-mono text-[10px] uppercase tracking-wide border border-line text-ink-soft bg-paper rounded px-2.5 py-1">
                       Paid
                     </span>
                   )}
                 </div>
-                
-                <a 
-                  href={`/${category}/${modelSlug}`} 
-                  class="executive-btn text-sm px-5 py-2.5"
-                >
-                  Read Full Review &rarr;
-                </a>
               </div>
+
+              <p class="text-ink-soft text-sm leading-relaxed mb-6 line-clamp-3">
+                {model.data.description}
+              </p>
+            </div>
+
+            <div class="border-t border-line pt-4">
+              <a 
+                href={`/${category}/${modelSlug}`} 
+                class="w-full inline-flex items-center justify-center gap-1.5 border border-line bg-paper px-4 py-2 rounded font-mono text-xs uppercase tracking-[0.15em] hover:bg-emerald hover:text-white hover:border-emerald transition-all no-underline shadow-sm"
+              >
+                <span>Read Full Review</span> <span class="inline-block translate-y-[0.5px] font-sans">→</span>
+              </a>
             </div>
           </article>
         );
