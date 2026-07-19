@@ -1,0 +1,82 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+
+// Human-friendly mapping for postType badges
+const postTypeLabels: Record<string, string> = {
+  'news': 'Update',
+  'listicle': 'Listicle',
+  'deep-dive': 'Deep Dive',
+  'comparison': 'Comparison',
+  'opinion': 'Opinion',
+};
+
+const badgeLabel = postTypeLabels[post.data.postType] || post.data.postType;
+
+// Format pubDate cleanly
+const formattedDate = new Date(post.data.pubDate).toLocaleDateString('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+});
+
+// Extract slug (handles file paths or Astro 5 IDs)
+const slug = post.id.replace(/\.md$/, '').split('/').pop();
+---
+
+<article 
+  class="bg-paper-alt border border-line rounded-lg p-6 flex flex-col justify-between h-full hover:border-emerald/45 transition-all group"
+  style="box-shadow: 0 4px 12px var(--theme-shadow);"
+>
+  <div>
+    <!-- Badge and Date Row -->
+    <div class="flex items-center justify-between gap-3 mb-4">
+      <span class="font-mono text-[11px] uppercase tracking-wide border border-emerald/30 text-emerald bg-emerald-light rounded px-2.5 py-1 font-medium">
+        {badgeLabel}
+      </span>
+      <time datetime={new Date(post.data.pubDate).toISOString()} class="font-mono text-xs text-ink-soft">
+        {formattedDate}
+      </time>
+    </div>
+
+    <!-- Title with Line Clamp & Min Height for Grid Uniformity -->
+    <h3 class="font-display text-xl text-ink leading-snug line-clamp-2 min-h-[3.25rem] mb-3 group-hover:text-emerald transition-colors">
+      <a href={`/blog/${slug}`} class="no-underline text-inherit focus-visible:outline-none">
+        {post.data.title}
+      </a>
+    </h3>
+
+    <!-- Excerpt with Line Clamp & Min Height for Grid Uniformity -->
+    <p class="text-ink-soft text-sm leading-relaxed line-clamp-3 min-h-[4.25rem] mb-4">
+      {post.data.excerpt}
+    </p>
+
+    <!-- Optional Tags Row -->
+    {post.data.tags && post.data.tags.length > 0 && (
+      <div class="flex flex-wrap gap-1.5 mb-6">
+        {post.data.tags.slice(0, 3).map((tag) => (
+          <span class="tag-pill text-[10px] py-0.5 px-2">#{tag}</span>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <!-- Card Action Footer -->
+  <div class="border-t border-line pt-4 mt-auto">
+    <a
+      href={`/blog/${slug}`}
+      class="w-full inline-flex items-center justify-center gap-1.5 border border-line bg-paper px-4 py-2 rounded font-mono text-xs uppercase tracking-[0.15em] hover:bg-emerald hover:border-emerald transition-all no-underline"
+      style="box-shadow: 0 1px 3px var(--theme-shadow); color: var(--theme-ink);"
+      onmouseenter="this.style.color='var(--theme-btn-hover-text)'"
+      onmouseleave="this.style.color='var(--theme-ink)'"
+    >
+      <span>{post.data.postType === 'news' ? 'Read Update' : 'Read Article'}</span> 
+      <span class="inline-block translate-y-[0.5px] font-sans">→</span>
+    </a>
+  </div>
+</article>

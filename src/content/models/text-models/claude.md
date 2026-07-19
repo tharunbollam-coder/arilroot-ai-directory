@@ -4,6 +4,8 @@ category: "text-models"
 description: "Claude is an advanced AI assistant created by Anthropic, renowned for its nuanced writing, massive context window, and industry-leading low hallucination rates. It excels in long-form document analysis, complex coding, and safe, reliable enterprise deployments."
 
 creator: "Anthropic"
+publishedDate: 2026-02-10
+lastUpdated: 2026-07-05
 logo: "https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg"
 officialLink: "https://claude.ai"
 

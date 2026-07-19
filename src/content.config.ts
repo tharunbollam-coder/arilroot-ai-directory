@@ -11,6 +11,8 @@ const modelsCollection = defineCollection({
         category: z.string(),
         description: z.string(),
         creator: z.string(),
+        publishedDate: z.coerce.date(),
+        lastUpdated: z.coerce.date().optional(),
         pricingTier: z.enum(['Free', 'Freemium', 'Paid']).default('Freemium'),
 
         // Media & Assets (Optional to support open-source models without logos or sites)
@@ -91,6 +93,23 @@ const modelsCollection = defineCollection({
     }),
 });
 
+const blogCollection = defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
+    schema: z.object({
+        title: z.string(),
+        pubDate: z.coerce.date(),
+        updatedDate: z.coerce.date().optional(),
+        postType: z.enum(['news', 'listicle', 'deep-dive', 'comparison', 'opinion']),
+        excerpt: z.string(),
+        tags: z.array(z.string()).default([]),
+        relatedTools: z.array(z.object({
+            name: z.string(),
+            link: z.string(),
+        })).default([]),
+    }),
+});
+
 export const collections = {
     'models': modelsCollection,
+    'blog': blogCollection,
 };

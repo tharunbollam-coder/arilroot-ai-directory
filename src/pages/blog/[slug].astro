@@ -1,0 +1,258 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+// Map all blog posts to static routes at build time
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  
+  return allPosts.map(post => {
+    const slug = post.id.replace(/\.md$/, '').split('/').pop();
+    return {
+      params: { slug },
+      props: { post, allPosts }
+    };
+  });
+}
+
+const { post, allPosts } = Astro.props;
+const { Content, headings } = await render(post);
+
+// Filter headings for Table of Contents (H2 and H3)
+const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
+
+// Post type display label mapping
+const postTypeLabels: Record<string, string> = {
+  'news': 'UPDATE',
+  'listicle': 'LISTICLE',
+  'deep-dive': 'DEEP DIVE',
+  'comparison': 'COMPARISON',
+  'opinion': 'OPINION',
+};
+
+const postTypeLabel = postTypeLabels[post.data.postType] || post.data.postType.toUpperCase();
+const isNews = post.data.postType === 'news';
+
+// Format dates
+const formattedPubDate = new Date(post.data.pubDate).toLocaleDateString('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric'
+});
+
+const formattedUpdatedDate = post.data.updatedDate 
+  ? new Date(post.data.updatedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  : null;
+
+// Estimate reading time for long-form posts
+const rawBody = post.body || '';
+const wordCount = rawBody.trim().split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
+// Find other posts for "More from the blog" section (excluding current post)
+const currentSlug = post.id.replace(/\.md$/, '').split('/').pop();
+const otherPosts = allPosts
+  .filter(p => p.id.replace(/\.md$/, '').split('/').pop() !== currentSlug)
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+  .slice(0, 3);
+---
+
+<Layout 
+  title={`${post.data.title} - ArilRoot Blog`}
+  description={post.data.excerpt}
+>
+  <div class="container mx-auto max-w-4xl lg:max-w-6xl px-6 py-12">
+    
+    <!-- Breadcrumb (mono uppercase eyebrow style) -->
+    <nav class="flex mb-6 overflow-x-auto whitespace-nowrap pb-1" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center flex-nowrap font-mono text-xs uppercase tracking-[0.15em] text-ink-soft">
+        <li class="inline-flex items-center">
+          <a href="/" class="hover:text-emerald transition-colors no-underline">Home</a>
+        </li>
+        <li>
+          <span class="mx-2 text-line select-none">·</span>
+        </li>
+        <li>
+          <a href="/blog" class="hover:text-emerald transition-colors no-underline">Blog</a>
+        </li>
+        <li>
+          <span class="mx-2 text-line select-none">·</span>
+        </li>
+        <li>
+          <span class="text-ink truncate max-w-[200px] sm:max-w-none">{post.data.title}</span>
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Post Header Area -->
+    <header class="bg-paper-alt border border-line rounded-lg p-6 sm:p-10 mb-10" style="box-shadow: 0 4px 12px var(--theme-shadow);">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <span class="font-mono text-xs uppercase tracking-[0.25em] text-emerald font-semibold">
+          {postTypeLabel}
+        </span>
+        {!isNews && (
+          <>
+            <span class="text-line select-none">•</span>
+            <span class="font-mono text-xs text-ink-soft">
+              {readingTime} min read
+            </span>
+          </>
+        )}
+      </div>
+
+      <h1 class="font-display font-medium text-3xl sm:text-5xl tracking-tight text-ink leading-tight mb-4">
+        {post.data.title}
+      </h1>
+
+      <!-- Metadata Row: Published & Last Updated Dates -->
+      <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-ink-soft border-t border-line pt-4 mt-6">
+        <div>
+          Published: <time datetime={new Date(post.data.pubDate).toISOString()} class="text-ink">{formattedPubDate}</time>
+        </div>
+        {formattedUpdatedDate && (
+          <div>
+            · Last Updated: <time datetime={new Date(post.data.updatedDate!).toISOString()} class="text-ink">{formattedUpdatedDate}</time>
+          </div>
+        )}
+      </div>
+
+      <!-- Tag Pills -->
+      {post.data.tags && post.data.tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mt-4 pt-2">
+          {post.data.tags.map((tag) => (
+            <span class="tag-pill">#{tag}</span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Mobile Collapsible TOC (Rendered if post has headings) -->
+    {tocHeadings.length > 0 && (
+      <div class="block lg:hidden mb-8">
+        <details class="bg-paper-alt border border-line rounded-lg p-4 group" style="box-shadow: 0 2px 8px var(--theme-shadow);">
+          <summary class="font-mono text-xs uppercase tracking-[0.15em] text-emerald font-semibold cursor-pointer flex items-center justify-between select-none">
+            <span class="flex items-center gap-2">
+              <span class="text-emerald font-bold">§</span> Jump to section ({tocHeadings.length})
+            </span>
+            <span class="group-open:rotate-180 transition-transform text-ink-soft text-sm">↓</span>
+          </summary>
+          <nav class="mt-4 pt-3 border-t border-line space-y-2 font-mono text-xs">
+            {tocHeadings.map((h) => (
+              <a 
+                href={`#${h.slug}`} 
+                class={`block text-ink-soft hover:text-emerald py-1 no-underline transition-colors ${h.depth === 3 ? 'pl-4 text-[11px]' : 'font-medium'}`}
+              >
+                {h.depth === 3 ? '— ' : ''}{h.text}
+              </a>
+            ))}
+          </nav>
+        </details>
+      </div>
+    )}
+
+    <!-- Unified Article Body Area (Same layout for all post types) -->
+    <div class="flex flex-col lg:flex-row gap-10 lg:gap-12 items-start mb-16">
+      <div class="flex-grow min-w-0 w-full max-w-none lg:max-w-3xl">
+        <!-- Article Content -->
+        <article class="prose-blog">
+          <Content />
+        </article>
+      </div>
+
+      <!-- Sticky Sidebar TOC for Desktop (Rendered if post has headings) -->
+      {tocHeadings.length > 0 && (
+        <aside class="hidden lg:block w-64 shrink-0 sticky top-24 self-start">
+          <div class="bg-paper-alt border border-line rounded-lg p-5" style="box-shadow: 0 4px 12px var(--theme-shadow);">
+            <p class="font-mono text-xs uppercase tracking-[0.15em] text-emerald mb-3 font-semibold flex items-center gap-2">
+              <span>§</span> On This Page
+            </p>
+            <nav class="space-y-2 font-mono text-xs border-t border-line pt-3 max-h-[calc(100vh-12rem)] overflow-y-auto">
+              {tocHeadings.map((h) => (
+                <a
+                  href={`#${h.slug}`}
+                  class={`block text-ink-soft hover:text-emerald transition-colors no-underline leading-snug py-0.5 ${h.depth === 3 ? 'pl-3 text-[11px]' : 'font-medium'}`}
+                >
+                  {h.text}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </aside>
+      )}
+    </div>
+
+    <!-- End-of-Post Section: Related Tools (Strictly Conditional) -->
+    {post.data.relatedTools && post.data.relatedTools.length > 0 && (
+      <section class="border-t border-line pt-10 mb-16">
+        <div class="mb-6">
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-2">Referenced Engines</p>
+          <div class="flex items-center gap-3">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h3 class="font-display text-2xl text-ink">Related Tools</h3>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {post.data.relatedTools.map((tool) => (
+            <div class="bg-paper-alt border border-line rounded-lg p-5 flex items-center justify-between hover:border-emerald/45 transition-colors" style="box-shadow: 0 2px 8px var(--theme-shadow);">
+              <div>
+                <h4 class="font-display font-medium text-lg text-ink">{tool.name}</h4>
+                <p class="font-mono text-[11px] uppercase tracking-wide text-ink-soft mt-0.5">Directory Review</p>
+              </div>
+              <a
+                href={tool.link}
+                class="inline-flex items-center gap-1 border border-line bg-paper px-3 py-1.5 rounded font-mono text-xs uppercase tracking-wide text-emerald hover:bg-emerald hover:border-emerald transition-all no-underline"
+                style="box-shadow: 0 1px 3px var(--theme-shadow);"
+                onmouseenter="this.style.color='var(--theme-btn-hover-text)'"
+                onmouseleave="this.style.color='var(--theme-emerald)'"
+              >
+                <span>Review</span>
+                <span class="font-sans text-xs">↗</span>
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Closing Area (Strict Order: 1. "More from the blog" (conditional), 2. "Back to all posts" (always shown)) -->
+    <div class="space-y-16">
+      
+      <!-- 1. "More from the blog" Mini-Section (Only if at least 2 other posts exist) -->
+      {otherPosts.length >= 2 && (
+        <section class="border-t border-line pt-12">
+          <div class="mb-8">
+            <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-2">Continue Reading</p>
+            <div class="flex items-center gap-3">
+              <span class="font-mono text-emerald text-sm">§</span>
+              <h3 class="font-display text-2xl sm:text-3xl text-ink">More from the Blog</h3>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            {otherPosts.map((otherPost) => (
+              <BlogCard post={otherPost} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- 2. "Back to all posts" Link (Always shown at the very bottom with clear spacing) -->
+      <div class="pt-6 border-t border-line flex justify-center">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 border border-line bg-paper-alt px-6 py-3 rounded font-mono text-xs uppercase tracking-[0.15em] hover:bg-emerald hover:border-emerald transition-all no-underline"
+          style="box-shadow: 0 2px 6px var(--theme-shadow); color: var(--theme-ink);"
+          onmouseenter="this.style.color='var(--theme-btn-hover-text)'"
+          onmouseleave="this.style.color='var(--theme-ink)'"
+        >
+          <span class="inline-block translate-y-[0.5px] font-sans">←</span>
+          <span>Back to All Blog Posts</span>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</Layout>

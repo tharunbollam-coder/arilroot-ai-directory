@@ -4,6 +4,8 @@ category: "text-models"
 description: "ChatGPT is one of the world's most advanced and widely used AI assistants. Developed by OpenAI, it helps users generate content, answer questions, analyze files, write and debug code, perform research, solve problems, brainstorm ideas, translate languages, and automate everyday tasks through simple natural conversation."
 
 creator: "OpenAI"
+publishedDate: 2026-01-15
+lastUpdated: 2026-07-01
 logo: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg"
 officialLink: "https://chatgpt.com"
 

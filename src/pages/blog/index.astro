@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+// Fetch and sort all blog posts by pubDate descending
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+---
+
+<Layout 
+  title="ArilRoot Blog - AI Insights, Comparisons & Tool News"
+  description="Explore the latest AI news updates, tool comparisons, in-depth technical guides, and curated listicles from the ArilRoot team."
+>
+  <div class="container mx-auto max-w-6xl px-6 py-12">
+    
+    <!-- Breadcrumb -->
+    <nav class="flex mb-8 overflow-x-auto whitespace-nowrap pb-1" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center flex-nowrap font-mono text-xs uppercase tracking-[0.15em] text-ink-soft">
+        <li class="inline-flex items-center">
+          <a href="/" class="hover:text-emerald transition-colors no-underline">Home</a>
+        </li>
+        <li>
+          <span class="mx-2 text-line select-none">·</span>
+        </li>
+        <li>
+          <span class="text-ink">Blog</span>
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="mb-14 border-b border-line pb-10">
+      <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-3">Insights & Updates</p>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="font-mono text-emerald text-sm">§</span>
+        <h1 class="font-display font-medium text-4xl sm:text-6xl tracking-tight text-ink">ArilRoot AI Blog</h1>
+      </div>
+      <p class="text-ink-soft text-lg sm:text-xl max-w-3xl leading-relaxed font-display italic">
+        Independent analysis, rapid model update alerts, head-to-head engine comparisons, and tactical prompt engineering guides.
+      </p>
+    </header>
+
+    <!-- Blog Posts Grid -->
+    {sortedPosts.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+        {sortedPosts.map((post) => (
+          <BlogCard post={post} />
+        ))}
+      </div>
+    ) : (
+      <div class="ds-card p-12 text-center my-12">
+        <p class="font-mono text-sm text-ink-soft">No blog posts found.</p>
+      </div>
+    )}
+  </div>
+</Layout>

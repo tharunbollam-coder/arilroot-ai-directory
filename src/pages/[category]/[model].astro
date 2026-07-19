@@ -32,6 +32,17 @@ const categoryDisplayNames: Record<string, string> = {
 };
 
 const categoryDisplayName = categoryDisplayNames[model.data.category] || model.data.category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+// Format publishedDate and lastUpdated dates
+const formattedPubDate = new Date(model.data.publishedDate).toLocaleDateString('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric'
+});
+
+const formattedUpdatedDate = model.data.lastUpdated
+  ? new Date(model.data.lastUpdated).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  : null;
 ---
 
 <Layout 
@@ -96,30 +107,44 @@ const categoryDisplayName = categoryDisplayNames[model.data.category] || model.d
         </p>
       </div>
 
-      <!-- Custom Tags / Links -->
-      <div class="mt-6 flex flex-wrap items-center gap-3">
-        {model.data.pricingTier === 'Free' && (
-          <span class="font-mono text-[11px] uppercase tracking-wide border border-emerald/30 text-emerald bg-emerald-light rounded px-2.5 py-1">Free Tier Available</span>
-        )}
-        {model.data.pricingTier === 'Freemium' && (
-          <span class="font-mono text-[11px] uppercase tracking-wide border border-emerald/30 text-emerald bg-emerald-light rounded px-2.5 py-1">Freemium Tier</span>
-        )}
-        {model.data.pricingTier === 'Paid' && (
-          <span class="font-mono text-[11px] uppercase tracking-wide border border-line text-ink-soft bg-paper rounded px-2.5 py-1">Paid Tier</span>
-        )}
-        {model.data.officialLink && (
-          <a 
-            href={model.data.officialLink} 
-            target="_blank" 
-            rel="noopener" 
-            class="inline-flex items-center gap-1.5 border border-line bg-paper text-emerald hover:bg-emerald hover:border-emerald px-4 py-2 rounded font-mono text-xs uppercase tracking-wide transition-all no-underline"
-            style="box-shadow: 0 1px 3px var(--theme-shadow);"
-            onmouseenter="this.style.color='var(--theme-btn-hover-text)'"
-            onmouseleave="this.style.color='var(--theme-emerald)'"
-          >
-            <span>Visit Site</span> <span class="inline-block translate-y-[-0.5px] font-sans text-xs">↗</span>
-          </a>
-        )}
+      <!-- Custom Tags / Links & Dates Meta Bar -->
+      <div class="mt-6 pt-6 border-t border-line flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-3">
+          {model.data.pricingTier === 'Free' && (
+            <span class="font-mono text-[11px] uppercase tracking-wide border border-emerald/30 text-emerald bg-emerald-light rounded px-2.5 py-1">Free Tier Available</span>
+          )}
+          {model.data.pricingTier === 'Freemium' && (
+            <span class="font-mono text-[11px] uppercase tracking-wide border border-emerald/30 text-emerald bg-emerald-light rounded px-2.5 py-1">Freemium Tier</span>
+          )}
+          {model.data.pricingTier === 'Paid' && (
+            <span class="font-mono text-[11px] uppercase tracking-wide border border-line text-ink-soft bg-paper rounded px-2.5 py-1">Paid Tier</span>
+          )}
+          {model.data.officialLink && (
+            <a 
+              href={model.data.officialLink} 
+              target="_blank" 
+              rel="noopener" 
+              class="inline-flex items-center gap-1.5 border border-line bg-paper text-emerald hover:bg-emerald hover:border-emerald px-4 py-2 rounded font-mono text-xs uppercase tracking-wide transition-all no-underline"
+              style="box-shadow: 0 1px 3px var(--theme-shadow);"
+              onmouseenter="this.style.color='var(--theme-btn-hover-text)'"
+              onmouseleave="this.style.color='var(--theme-emerald)'"
+            >
+              <span>Visit Site</span> <span class="inline-block translate-y-[-0.5px] font-sans text-xs">↗</span>
+            </a>
+          )}
+        </div>
+
+        <!-- Review Publication & Update Dates -->
+        <div class="flex flex-wrap items-center gap-3 text-xs font-mono text-ink-soft">
+          <div>
+            Review published: <time datetime={new Date(model.data.publishedDate).toISOString()} class="text-ink">{formattedPubDate}</time>
+          </div>
+          {formattedUpdatedDate && (
+            <div>
+              · Last Updated: <time datetime={new Date(model.data.lastUpdated!).toISOString()} class="text-ink">{formattedUpdatedDate}</time>
+            </div>
+          )}
+        </div>
       </div>
     </header>
 

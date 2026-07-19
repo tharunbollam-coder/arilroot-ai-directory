@@ -4,6 +4,7 @@ category: "text-models"
 description: "Google Gemini is a highly capable multimodal AI ecosystem deeply integrated into Google Workspace and Android. It features advanced reasoning, real-time voice and video processing, agentic workflows, and seamless access to live web data, making it a powerful assistant for developers, professionals, and everyday users."
 
 creator: "Google DeepMind"
+publishedDate: 2026-03-01
 logo: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg"
 officialLink: "https://gemini.google.com"
 

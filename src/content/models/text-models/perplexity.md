@@ -4,6 +4,7 @@ category: "text-models"
 description: "Perplexity AI is an advanced conversational search engine and research assistant. Instead of providing a list of blue links, it acts as an autonomous research agent that reads the live internet, synthesizes answers, and backs up every claim with verifiable inline citations."
 
 creator: "Perplexity"
+publishedDate: 2026-03-20
 logo: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Perplexity_logo_2026.svg"
 officialLink: "https://www.perplexity.ai"
 
