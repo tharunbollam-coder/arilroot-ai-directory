@@ -1,16 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import BlogCard from '../../components/BlogCard.astro';
+import NewsCard from '../../components/NewsCard.astro';
 
-// Fetch and sort all blog posts by pubDate descending
-const allPosts = await getCollection('blog');
-const sortedPosts = allPosts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+// Fetch and sort all news entries by pubDate descending
+const allNews = await getCollection('news');
+const sortedNews = allNews.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
 ---
 
 <Layout 
-  title="ArilRoot Blog - AI Insights, Comparisons & Guides"
-  description="Explore in-depth technical guides, tool comparisons, analysis essays, and curated listicles from the ArilRoot team."
+  title="AI News & Updates - ArilRoot"
+  description="Stay up to date with rapid model release updates, API deployments, and breaking AI industry news."
 >
   <div class="container mx-auto max-w-6xl px-6 py-12">
     
@@ -24,33 +24,33 @@ const sortedPosts = allPosts.sort((a, b) => new Date(b.data.pubDate).getTime() -
           <span class="mx-2 text-line select-none">·</span>
         </li>
         <li>
-          <span class="text-ink">Blog</span>
+          <span class="text-ink">News</span>
         </li>
       </ol>
     </nav>
 
     <!-- Page Header -->
     <header class="mb-14 border-b border-line pb-10">
-      <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-3">Insights & Guides</p>
+      <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-3">Model Alerts & Updates</p>
       <div class="flex items-center gap-3 mb-4">
         <span class="font-mono text-emerald text-sm">§</span>
-        <h1 class="font-display font-medium text-4xl sm:text-6xl tracking-tight text-ink">ArilRoot AI Blog</h1>
+        <h1 class="font-display font-medium text-4xl sm:text-6xl tracking-tight text-ink">AI News & Bulletins</h1>
       </div>
       <p class="text-ink-soft text-lg sm:text-xl max-w-3xl leading-relaxed font-display italic">
-        Independent analysis, head-to-head engine comparisons, and tactical prompt engineering guides.
+        Quick updates on foundation model launches, developer API releases, and key AI industry announcements.
       </p>
     </header>
 
-    <!-- Blog Posts Grid -->
-    {sortedPosts.length > 0 ? (
+    <!-- News Grid -->
+    {sortedNews.length > 0 ? (
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-        {sortedPosts.map((post) => (
-          <BlogCard post={post} />
+        {sortedNews.map((item) => (
+          <NewsCard news={item} />
         ))}
       </div>
     ) : (
       <div class="ds-card p-12 text-center my-12">
-        <p class="font-mono text-sm text-ink-soft">No blog posts found.</p>
+        <p class="font-mono text-sm text-ink-soft">No news entries found.</p>
       </div>
     )}
   </div>

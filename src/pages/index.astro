@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import BlogCard from '../components/BlogCard.astro';
+import NewsCard from '../components/NewsCard.astro';
 
 // Fetch all model entries from content layer
 const allModels = await getCollection('models');
@@ -9,6 +10,12 @@ const allModels = await getCollection('models');
 // Fetch 3-4 most recent blog posts
 const allBlogPosts = await getCollection('blog');
 const recentBlogPosts = allBlogPosts
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+  .slice(0, 3);
+
+// Fetch 3-4 most recent news entries
+const allNews = await getCollection('news');
+const recentNews = allNews
   .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
   .slice(0, 3);
 
@@ -135,13 +142,13 @@ const categoryDescriptions: Record<string, string> = {
     <section class="container mx-auto max-w-6xl px-6 py-16 border-t border-line">
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
         <div>
-          <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-3">Latest Articles & News</p>
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-3">Latest Articles & Deep Dives</p>
           <div class="flex items-center gap-3">
             <span class="font-mono text-emerald text-sm">§</span>
             <h2 class="font-display text-2xl sm:text-3xl text-ink">From the Blog</h2>
           </div>
           <p class="text-ink-soft mt-3 text-sm max-w-lg">
-            Stay informed with our latest model breakdown reviews, head-to-head engine comparisons, and industry news.
+            Stay informed with our latest model breakdown reviews, head-to-head engine comparisons, and tactical prompting guides.
           </p>
         </div>
 
@@ -160,6 +167,41 @@ const categoryDescriptions: Record<string, string> = {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
         {recentBlogPosts.map((post) => (
           <BlogCard post={post} />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- "Latest News" Section -->
+  {recentNews.length > 0 && (
+    <section class="container mx-auto max-w-6xl px-6 py-16 border-t border-line">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+        <div>
+          <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-3">Model Alerts & Updates</p>
+          <div class="flex items-center gap-3">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Latest News</h2>
+          </div>
+          <p class="text-ink-soft mt-3 text-sm max-w-lg">
+            Rapid updates on foundation model releases, feature announcements, and developer API rollouts.
+          </p>
+        </div>
+
+        <a
+          href="/news"
+          class="inline-flex items-center gap-1.5 border border-line bg-paper-alt px-5 py-2.5 rounded font-mono text-xs uppercase tracking-[0.15em] hover:bg-emerald hover:border-emerald transition-all no-underline shrink-0 self-start sm:self-auto"
+          style="box-shadow: 0 1px 3px var(--theme-shadow); color: var(--theme-ink);"
+          onmouseenter="this.style.color='var(--theme-btn-hover-text)'"
+          onmouseleave="this.style.color='var(--theme-ink)'"
+        >
+          <span>View All News</span> <span class="inline-block translate-y-[0.5px] font-sans">→</span>
+        </a>
+      </div>
+
+      <!-- Equal-Height News Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        {recentNews.map((item) => (
+          <NewsCard news={item} />
         ))}
       </div>
     </section>

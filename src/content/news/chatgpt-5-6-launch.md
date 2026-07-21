@@ -1,16 +1,14 @@
 ---
 title: "ChatGPT 5.6 Launches with Sol, Terra, and Luna Variants"
+cardDescription: "OpenAI launches ChatGPT 5.6 featuring Sol, Terra, and Luna model variants tailored for complex logic, high throughput, and sub-100ms voice latency."
 pubDate: 2026-07-18
-updatedDate: 2026-07-19
-postType: "news"
-excerpt: "OpenAI has officially unveiled ChatGPT 5.6, introducing three specialized architecture variants tailored for speed, multimodal reasoning, and ultra-low latency compute."
+lastUpdated: 2026-07-19
 tags: ["OpenAI", "ChatGPT", "AI News", "Model Release"]
 relatedTools:
   - name: "ChatGPT"
     link: "/text-models/chatgpt"
+sourceUrl: "https://openai.com/index/chatgpt-5-6"
 ---
-
-OpenAI has officially rolled out ChatGPT 5.6 to all subscription tiers and developer endpoints, marking one of the most substantial architectural refinements to the platform this year. The release breaks away from a monolithic model approach, introducing three distinct, co-designed model variants: **Sol**, **Terra**, and **Luna**. Each variant is purpose-built to address specific operational workloads ranging from sub-millisecond edge processing to multi-modal research synthesis.
 
 ## Sol
 

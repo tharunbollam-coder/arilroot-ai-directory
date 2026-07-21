@@ -1,68 +1,58 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import BlogCard from '../../components/BlogCard.astro';
+import NewsCard from '../../components/NewsCard.astro';
 
-// Map all blog posts to static routes at build time
+// Map all news entries to static routes at build time
 export async function getStaticPaths() {
-  const allPosts = await getCollection('blog');
+  const allNews = await getCollection('news');
   
-  return allPosts.map(post => {
-    const slug = post.id.replace(/\.md$/, '').split('/').pop();
+  return allNews.map(item => {
+    const slug = item.id.replace(/\.md$/, '').split('/').pop();
     return {
       params: { slug },
-      props: { post, allPosts }
+      props: { news: item, allNews }
     };
   });
 }
 
-const { post, allPosts } = Astro.props;
-const { Content, headings } = await render(post);
+const { news, allNews } = Astro.props;
+const { Content, headings } = await render(news);
 
 // Filter headings for Table of Contents (H2 and H3)
 const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
 
-// Post type display label mapping
-const postTypeLabels: Record<string, string> = {
-  'listicle': 'LISTICLE',
-  'deep-dive': 'DEEP DIVE',
-  'comparison': 'COMPARISON',
-  'opinion': 'OPINION',
-};
-
-const postTypeLabel = postTypeLabels[post.data.postType] || post.data.postType.toUpperCase();
-
 // Format dates
-const formattedPubDate = new Date(post.data.pubDate).toLocaleDateString('en-US', {
+const formattedPubDate = new Date(news.data.pubDate).toLocaleDateString('en-US', {
   month: 'short',
   day: 'numeric',
   year: 'numeric'
 });
 
-const formattedUpdatedDate = post.data.updatedDate 
-  ? new Date(post.data.updatedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+const formattedUpdatedDate = news.data.lastUpdated 
+  ? new Date(news.data.lastUpdated).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
   : null;
 
-// Estimate reading time for long-form posts
-const rawBody = post.body || '';
+// Estimate reading time
+const rawBody = news.body || '';
 const wordCount = rawBody.trim().split(/\s+/).filter(Boolean).length;
 const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
-// Find other posts for "More from the blog" section (excluding current post)
-const currentSlug = post.id.replace(/\.md$/, '').split('/').pop();
-const otherPosts = allPosts
-  .filter(p => p.id.replace(/\.md$/, '').split('/').pop() !== currentSlug)
+// Find other news items for "More News" section (excluding current item)
+const currentSlug = news.id.replace(/\.md$/, '').split('/').pop();
+const otherNews = allNews
+  .filter(n => n.id.replace(/\.md$/, '').split('/').pop() !== currentSlug)
   .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
   .slice(0, 3);
 ---
 
 <Layout 
-  title={`${post.data.title} - ArilRoot Blog`}
-  description={post.data.title}
+  title={`${news.data.title} - AI News`}
+  description={news.data.title}
 >
   <div class="container mx-auto max-w-4xl lg:max-w-6xl px-6 py-12">
     
-    <!-- Breadcrumb (mono uppercase eyebrow style) -->
+    <!-- Breadcrumb (mono uppercase eyebrow style matching blog) -->
     <nav class="flex mb-6 overflow-x-auto whitespace-nowrap pb-1" aria-label="Breadcrumb">
       <ol class="inline-flex items-center flex-nowrap font-mono text-xs uppercase tracking-[0.15em] text-ink-soft">
         <li class="inline-flex items-center">
@@ -72,22 +62,22 @@ const otherPosts = allPosts
           <span class="mx-2 text-line select-none">·</span>
         </li>
         <li>
-          <a href="/blog" class="hover:text-emerald transition-colors no-underline">Blog</a>
+          <a href="/news" class="hover:text-emerald transition-colors no-underline">News</a>
         </li>
         <li>
           <span class="mx-2 text-line select-none">·</span>
         </li>
         <li>
-          <span class="text-ink truncate max-w-[200px] sm:max-w-none">{post.data.title}</span>
+          <span class="text-ink truncate max-w-[200px] sm:max-w-none">{news.data.title}</span>
         </li>
       </ol>
     </nav>
 
-    <!-- Post Header Area -->
+    <!-- News Header Area -->
     <header class="bg-paper-alt border border-line rounded-lg p-6 sm:p-10 mb-10" style="box-shadow: 0 4px 12px var(--theme-shadow);">
       <div class="flex flex-wrap items-center gap-3 mb-4">
         <span class="font-mono text-xs uppercase tracking-[0.25em] text-emerald font-semibold">
-          {postTypeLabel}
+          NEWS UPDATE
         </span>
         <span class="text-line select-none">•</span>
         <span class="font-mono text-xs text-ink-soft">
@@ -96,32 +86,49 @@ const otherPosts = allPosts
       </div>
 
       <h1 class="font-display font-medium text-3xl sm:text-5xl tracking-tight text-ink leading-tight mb-4">
-        {post.data.title}
+        {news.data.title}
       </h1>
 
-      <!-- Metadata Row: Published & Last Updated Dates -->
-      <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-ink-soft border-t border-line pt-4 mt-6">
-        <div>
-          Published: <time datetime={new Date(post.data.pubDate).toISOString()} class="text-ink">{formattedPubDate}</time>
-        </div>
-        {formattedUpdatedDate && (
+      <!-- Metadata Row: Published & Last Updated Dates + Source Link -->
+      <div class="flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-ink-soft border-t border-line pt-4 mt-6">
+        <div class="flex flex-wrap items-center gap-4">
           <div>
-            · Last Updated: <time datetime={new Date(post.data.updatedDate!).toISOString()} class="text-ink">{formattedUpdatedDate}</time>
+            Published: <time datetime={new Date(news.data.pubDate).toISOString()} class="text-ink">{formattedPubDate}</time>
           </div>
+          {formattedUpdatedDate && (
+            <div>
+              · Last Updated: <time datetime={new Date(news.data.lastUpdated!).toISOString()} class="text-ink">{formattedUpdatedDate}</time>
+            </div>
+          )}
+        </div>
+
+        {news.data.sourceUrl && (
+          <a
+            href={news.data.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 border border-line bg-paper px-3 py-1.5 rounded font-mono text-xs uppercase tracking-wide text-emerald hover:bg-emerald hover:border-emerald transition-all no-underline shrink-0"
+            style="box-shadow: 0 1px 3px var(--theme-shadow);"
+            onmouseenter="this.style.color='var(--theme-btn-hover-text)'"
+            onmouseleave="this.style.color='var(--theme-emerald)'"
+          >
+            <span>Read full article</span>
+            <span class="font-sans text-xs">↗</span>
+          </a>
         )}
       </div>
 
       <!-- Tag Pills -->
-      {post.data.tags && post.data.tags.length > 0 && (
+      {news.data.tags && news.data.tags.length > 0 && (
         <div class="flex flex-wrap gap-2 mt-4 pt-2">
-          {post.data.tags.map((tag) => (
+          {news.data.tags.map((tag) => (
             <span class="tag-pill">#{tag}</span>
           ))}
         </div>
       )}
     </header>
 
-    <!-- Mobile Collapsible TOC (Rendered if post has headings) -->
+    <!-- Mobile Collapsible TOC (Rendered if news has headings) -->
     {tocHeadings.length > 0 && (
       <div class="block lg:hidden mb-8">
         <details class="bg-paper-alt border border-line rounded-lg p-4 group" style="box-shadow: 0 2px 8px var(--theme-shadow);">
@@ -145,16 +152,16 @@ const otherPosts = allPosts
       </div>
     )}
 
-    <!-- Unified Article Body Area (Same layout for all post types) -->
+    <!-- News Body Area (Matching Blog Detail Layout & Prose) -->
     <div class="flex flex-col lg:flex-row gap-10 lg:gap-12 items-start mb-16">
       <div class="flex-grow min-w-0 w-full max-w-none lg:max-w-3xl">
-        <!-- Article Content -->
+        <!-- Full Markdown Article Content -->
         <article class="prose-blog">
           <Content />
         </article>
       </div>
 
-      <!-- Sticky Sidebar TOC for Desktop (Rendered if post has headings) -->
+      <!-- Sticky Sidebar TOC for Desktop (Rendered if news has headings) -->
       {tocHeadings.length > 0 && (
         <aside class="hidden lg:block w-64 shrink-0 sticky top-24 self-start">
           <div class="bg-paper-alt border border-line rounded-lg p-5" style="box-shadow: 0 4px 12px var(--theme-shadow);">
@@ -176,8 +183,8 @@ const otherPosts = allPosts
       )}
     </div>
 
-    <!-- End-of-Post Section: Related Tools (Strictly Conditional) -->
-    {post.data.relatedTools && post.data.relatedTools.length > 0 && (
+    <!-- Optional Related Tools Section -->
+    {news.data.relatedTools && news.data.relatedTools.length > 0 && (
       <section class="border-t border-line pt-10 mb-16">
         <div class="mb-6">
           <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-2">Referenced Engines</p>
@@ -188,7 +195,7 @@ const otherPosts = allPosts
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {post.data.relatedTools.map((tool) => (
+          {news.data.relatedTools.map((tool) => (
             <div class="bg-paper-alt border border-line rounded-lg p-5 flex items-center justify-between hover:border-emerald/45 transition-colors" style="box-shadow: 0 2px 8px var(--theme-shadow);">
               <div>
                 <h4 class="font-display font-medium text-lg text-ink">{tool.name}</h4>
@@ -210,39 +217,37 @@ const otherPosts = allPosts
       </section>
     )}
 
-    <!-- Closing Area (Strict Order: 1. "More from the blog" (conditional), 2. "Back to all posts" (always shown)) -->
+    <!-- Closing Area: 1. "More News" Mini-Section (conditional), 2. "Back to All News" Link -->
     <div class="space-y-16">
       
-      <!-- 1. "More from the blog" Mini-Section (Only if at least 2 other posts exist) -->
-      {otherPosts.length >= 2 && (
+      {otherNews.length >= 2 && (
         <section class="border-t border-line pt-12">
           <div class="mb-8">
-            <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-2">Continue Reading</p>
+            <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-2">More Bulletins</p>
             <div class="flex items-center gap-3">
               <span class="font-mono text-emerald text-sm">§</span>
-              <h3 class="font-display text-2xl sm:text-3xl text-ink">More from the Blog</h3>
+              <h3 class="font-display text-2xl sm:text-3xl text-ink">More News</h3>
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            {otherPosts.map((otherPost) => (
-              <BlogCard post={otherPost} />
+            {otherNews.map((otherItem) => (
+              <NewsCard news={otherItem} />
             ))}
           </div>
         </section>
       )}
 
-      <!-- 2. "Back to all posts" Link (Always shown at the very bottom with clear spacing) -->
       <div class="pt-6 border-t border-line flex justify-center">
         <a
-          href="/blog"
+          href="/news"
           class="inline-flex items-center gap-2 border border-line bg-paper-alt px-6 py-3 rounded font-mono text-xs uppercase tracking-[0.15em] hover:bg-emerald hover:border-emerald transition-all no-underline"
           style="box-shadow: 0 2px 6px var(--theme-shadow); color: var(--theme-ink);"
           onmouseenter="this.style.color='var(--theme-btn-hover-text)'"
           onmouseleave="this.style.color='var(--theme-ink)'"
         >
           <span class="inline-block translate-y-[0.5px] font-sans">←</span>
-          <span>Back to All Blog Posts</span>
+          <span>Back to All News</span>
         </a>
       </div>
 

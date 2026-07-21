@@ -1,9 +1,9 @@
 ---
 title: "Tips to Use Claude More Efficiently"
+cardDescription: "Master XML prompting strategies, response pre-filling, multi-file context management, and systematic reasoning workflows with Claude."
 pubDate: 2026-07-05
 updatedDate: 2026-07-12
 postType: "deep-dive"
-excerpt: "Master advanced prompting strategies, multi-file context management, and systematic reasoning workflows to maximize your productivity with Anthropic's Claude."
 tags: ["Claude", "Prompt Engineering", "Workflow", "Deep Dive"]
 relatedTools:
   - name: "Claude"

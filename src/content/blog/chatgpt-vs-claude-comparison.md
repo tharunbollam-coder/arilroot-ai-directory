@@ -1,8 +1,8 @@
 ---
 title: "ChatGPT vs Claude: Complete 2026 Head-to-Head Comparison"
+cardDescription: "An in-depth analysis comparing ChatGPT and Claude across writing quality, coding capabilities, context windows, and ecosystem features."
 pubDate: 2026-06-28
 postType: "comparison"
-excerpt: "An in-depth analysis comparing ChatGPT and Claude across writing quality, complex software development, context windows, API costs, and ecosystem capabilities."
 tags: ["ChatGPT", "Claude", "Comparison", "AI Benchmarks"]
 relatedTools:
   - name: "ChatGPT"

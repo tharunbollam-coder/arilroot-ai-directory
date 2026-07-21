@@ -1,8 +1,8 @@
 ---
 title: "Top 5 AI Image Generation Tools in 2026"
+cardDescription: "A curated roundup comparing the top 5 image and art generation tools on prompt comprehension, visual fidelity, style controls, and pricing."
 pubDate: 2026-07-10
 postType: "listicle"
-excerpt: "A comprehensive roundup of the leading image and art generation tools, comparing visual fidelity, prompt comprehension, style control, and pricing tiers."
 tags: ["Image Generation", "Art AI", "Productivity", "Listicle"]
 relatedTools:
   - name: "ChatGPT (DALL-E 3)"

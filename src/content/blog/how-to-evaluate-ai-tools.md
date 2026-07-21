@@ -1,8 +1,8 @@
 ---
 title: "How to Evaluate a New AI Tool Before You Commit to It"
+cardDescription: "A structured evaluation framework for assessing reliability, privacy, pricing transparency, and lock-in risk before adopting new AI software."
 pubDate: 2026-06-20
 postType: "opinion"
-excerpt: "Navigating the flood of new AI product launches requires a structured evaluation framework. Here is how to assess reliability, privacy, pricing transparency, and lock-in risk."
 tags: ["Evaluation Framework", "AI Buying Guide", "Strategy", "Opinion"]
 relatedTools: []
 ---

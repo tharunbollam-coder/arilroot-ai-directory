@@ -97,10 +97,10 @@ const blogCollection = defineCollection({
     loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
     schema: z.object({
         title: z.string(),
+        cardDescription: z.string(),
         pubDate: z.coerce.date(),
         updatedDate: z.coerce.date().optional(),
-        postType: z.enum(['news', 'listicle', 'deep-dive', 'comparison', 'opinion']),
-        excerpt: z.string(),
+        postType: z.enum(['listicle', 'deep-dive', 'comparison', 'opinion']),
         tags: z.array(z.string()).default([]),
         relatedTools: z.array(z.object({
             name: z.string(),
@@ -109,7 +109,24 @@ const blogCollection = defineCollection({
     }),
 });
 
+const newsCollection = defineCollection({
+    loader: glob({ pattern: "**/*.md", base: "./src/content/news" }),
+    schema: z.object({
+        title: z.string(),
+        cardDescription: z.string(),
+        pubDate: z.coerce.date(),
+        lastUpdated: z.coerce.date().optional(),
+        tags: z.array(z.string()).default([]),
+        relatedTools: z.array(z.object({
+            name: z.string(),
+            link: z.string(),
+        })).default([]),
+        sourceUrl: z.string().url().optional(),
+    }),
+});
+
 export const collections = {
     'models': modelsCollection,
     'blog': blogCollection,
+    'news': newsCollection,
 };
