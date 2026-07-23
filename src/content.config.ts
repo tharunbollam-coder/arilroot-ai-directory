@@ -4,7 +4,7 @@ import { glob } from 'astro/loaders';
 
 const modelsCollection = defineCollection({
     // This tells Astro exactly where to look for your markdown files
-    loader: glob({ pattern: "**/*.md", base: "./src/content/models" }),
+    loader: glob({ pattern: "**/*.md", base: "src/content/models" }),
     schema: z.object({
         // Core Identity Fields (Strictly Required)
         title: z.string(),
@@ -14,6 +14,7 @@ const modelsCollection = defineCollection({
         publishedDate: z.coerce.date(),
         lastUpdated: z.coerce.date().optional(),
         pricingTier: z.enum(['Free', 'Freemium', 'Paid']).default('Freemium'),
+        testStatus: z.enum(['main-stack', 'hands-on-tested', 'watchlist']),
 
         // Media & Assets (Optional to support open-source models without logos or sites)
         logo: z.string().url().optional().nullable(),
@@ -45,8 +46,8 @@ const modelsCollection = defineCollection({
         pricing: z.object({
             startingPrice: z.string().optional(),
             pricingUrl: z.string().url().optional(),
-            free: z.string(),
-            paid: z.string(),
+            free: z.string().optional(),
+            paid: z.string().optional(),
         }).optional(),
 
         // Complex Datasets (Defaulted to empty arrays if missing from markdown files)
@@ -57,8 +58,8 @@ const modelsCollection = defineCollection({
         })).default([]),
 
         bestFor: z.object({
-            who: z.string(),
-            what: z.string(),
+            who: z.string().optional(),
+            what: z.string().optional(),
         }).optional(),
 
         topFeatures: z.array(z.object({
@@ -66,10 +67,8 @@ const modelsCollection = defineCollection({
             details: z.string(),
         })).default([]),
 
-        accessPlatforms: z.array(z.object({
-            name: z.string(),
-            details: z.string(),
-        })).default([]),
+        officialAccessText: z.string(),
+        alsoAvailableViaText: z.string().optional(),
 
         useCases: z.array(z.object({
             title: z.string(),
@@ -94,7 +93,7 @@ const modelsCollection = defineCollection({
 });
 
 const blogCollection = defineCollection({
-    loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
+    loader: glob({ pattern: "**/*.md", base: "src/content/blog" }),
     schema: z.object({
         title: z.string(),
         cardDescription: z.string(),
@@ -110,7 +109,7 @@ const blogCollection = defineCollection({
 });
 
 const newsCollection = defineCollection({
-    loader: glob({ pattern: "**/*.md", base: "./src/content/news" }),
+    loader: glob({ pattern: "**/*.md", base: "src/content/news" }),
     schema: z.object({
         title: z.string(),
         cardDescription: z.string(),

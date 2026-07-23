@@ -5,6 +5,7 @@ description: "Perplexity AI is an advanced conversational search engine and rese
 
 creator: "Perplexity"
 publishedDate: 2026-03-20
+testStatus: "hands-on-tested"
 logo: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Perplexity_logo_2026.svg"
 officialLink: "https://www.perplexity.ai"
 
@@ -62,15 +63,7 @@ topFeatures:
   - title: "Spaces & Pages"
     details: "Users can organize threads into project folders called 'Spaces' or convert research into publishable, beautifully formatted articles called 'Pages'."
 
-accessPlatforms:
-  - name: "Web Browser"
-    details: "You can open any internet browser on your desktop or mobile device, type perplexity.ai into the address line, and begin using the platform immediately. Everything is hosted securely in the cloud, so you can jump right into your searches without downloading any external files or running setups."
-
-  - name: "Mobile Apps"
-    details: "For quick searches on the go, you can open up the App Store on an iPhone or the Google Play Store on an Android phone. Search for the official application, download it, and log into your account so you can type out questions and look up information from anywhere."
-
-  - name: "Comet Browser"
-    details: "If you want the tool fully integrated into your web browsing, you can download the standalone Comet Browser application directly from the official website or your computer's built-in app store. You just install it on your Mac, Windows PC, or mobile device to use it as your main, daily web browser."
+officialAccessText: "You can access Perplexity through its official website at perplexity.ai or its app, available on iOS, Android, and a native macOS desktop app."
 
 useCases:
   - title: "Competitive Market Analysis"

@@ -5,6 +5,7 @@ description: "Google Gemini is a highly capable multimodal AI ecosystem deeply i
 
 creator: "Google DeepMind"
 publishedDate: 2026-03-01
+testStatus: "hands-on-tested"
 logo: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg"
 officialLink: "https://gemini.google.com"
 
@@ -62,15 +63,7 @@ topFeatures:
   - title: "Real-Time Gemini Live"
     details: "A bidirectional voice interface that allows for natural, interrupting, real-time conversations. It processes audio natively rather than converting speech-to-text, making the interaction feel highly human."
 
-accessPlatforms:
-  - name: "Web Browser"
-    details: "You can pull up any browser on your computer, laptop, or mobile phone and type gemini.google.com to get started. You just sign in with your regular Google account, and because it runs entirely online, you don't have to download any installer files or set up any local applications."
-
-  - name: "Google Workspace"
-    details: "If you already use online Google apps like Gmail, Docs, Sheets, or Slides, you can access the tool right inside those programs. You just open your usual working document or inbox in your web browser, and you will see the tool waiting for you inside a dedicated panel on the side of your screen."
-
-  - name: "Android Native Integration"
-    details: "On Android mobile devices, you can set the tool up as your primary phone assistant through your device settings or by updating it from the Google Play Store. Once enabled, you can bring it up instantly on your phone screen by holding down your phone's power button or using your voice activation command."
+officialAccessText: "You can access Gemini through Google's official website at gemini.google.com or its app on iOS and Android, and it's also built directly into Google Workspace apps like Gmail, Docs, and Sheets."
 
 useCases:
   - title: "Enterprise Data Synthesis"

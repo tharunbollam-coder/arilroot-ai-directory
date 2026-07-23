@@ -6,6 +6,7 @@ description: "Claude is an advanced AI assistant created by Anthropic, renowned 
 creator: "Anthropic"
 publishedDate: 2026-02-10
 lastUpdated: 2026-07-05
+testStatus: "main-stack"
 logo: "https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg"
 officialLink: "https://claude.ai"
 
@@ -64,15 +65,7 @@ topFeatures:
   - title: "Industry-Leading Safety & Reliability"
     details: "Built with 'Constitutional AI,' Claude refuses harmful prompts and hallucinates significantly less than competitors, making it a top choice for strict enterprise and legal environments."
 
-accessPlatforms:
-  - name: "Web Browser"
-    details: "You can open up any standard web browser on your computer or mobile phone, type claude.ai into the address bar, and log straight into your account. The entire system runs fully in the cloud, so you don't need to install software or deal with complicated configurations to start working."
-
-  - name: "iOS & Android Apps"
-    details: "If you want to use it on your phone or tablet, you can head directly to the Apple App Store or Google Play Store. Just look for the official application published by Anthropic, download it to your device, and you can instantly pick up your chats or type questions while you are away from your desk."
-
-  - name: "Claude Code (Terminal)"
-    details: "For developers who prefer staying inside their coding environments, you can install the tool directly through your system's command line or terminal. You just run a quick setup command to download it, allowing you to interact with the model right inside your local coding folders without opening a separate app."
+officialAccessText: "You can access Claude through Anthropic's official website at claude.ai or its app, available on iOS, Android, and desktop."
 
 useCases:
   - title: "Massive Document Synthesis"

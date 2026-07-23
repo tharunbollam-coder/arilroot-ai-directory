@@ -6,6 +6,7 @@ description: "Kling Video 3.0 is a highly capable AI video generator built speci
 creator: "Kuaishou"
 publishedDate: 2026-04-12
 pricingTier: Free
+testStatus: "hands-on-tested"
 logo: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Kuaishou_logo.svg"
 officialLink: "https://klingai.com"
 
@@ -70,15 +71,7 @@ topFeatures:
   - title: "Ultra-Sharp Video Text Rendering"
     details: "Solves the classic AI problem of blurry or gibberish text by rendering completely sharp, readable words on street signs, clothing typography, and product packaging labels."
 
-accessPlatforms:
-  - name: "Web Creation Workspace"
-    details: "You can open up any standard web browser on your desktop or laptop computer, head over to the official website, and log into your personal dashboard. Since the video generation runs entirely on cloud servers, you can build and organize your video projects directly in your browser without downloading heavy software or installations."
-
-  - name: "Mobile Production Hub"
-    details: "If you are away from your desk, you can log into the platform using your smartphone or tablet's web browser. It is fully optimized for mobile screens, allowing you to easily look over your previous clips, type out new ideas, and monitor your rendering progress directly from your phone."
-
-  - name: "Centralized Asset Dashboard"
-    details: "You can open this up directly within your main account screen after logging in through your browser. It functions as your central home panel where you can view your uploaded reference pictures, keep an eye on your remaining monthly subscription credits, and scroll through your generation history."
+officialAccessText: "You can access Kling through its official website at klingai.com or its app, available on iOS and Android."
 
 useCases:
   - title: "High-Volume Social Media Scaling"
