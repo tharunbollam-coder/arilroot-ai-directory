@@ -217,3 +217,11 @@
     @apply bg-transparent border-0 p-0 text-ink;
   }
 }
+
+/* FAQ Accordion Summary Marker Reset */
+details summary::-webkit-details-marker {
+  display: none;
+}
+details summary {
+  list-style: none;
+}

@@ -112,4 +112,21 @@ alternatives:
   - name: "Google Gemini"
     value: "Better for users who need to analyze massive datasets (up to 2 million tokens) or who work heavily inside Google Docs and Drive."
     link: "/text-models/gemini"
+
+faqs:
+  - question: "Is there a free tier available for Claude?"
+    answer: "Yes, Anthropic offers a free plan on claude.ai and mobile apps with access to core Claude models and file uploads, subject to daily usage and message limits."
+
+  - question: "Can I upload PDFs and documents to Claude?"
+    answer: "Yes, Claude excels at document analysis. You can upload PDFs, text files, spreadsheets, code files, and images directly into conversations for immediate extraction and summary."
+
+  - question: "Can I use Claude for commercial work?"
+    answer: "Yes, content and code generated via Claude can be used for commercial projects, client deliverables, and software publishing according to Anthropic's terms."
+
+  - question: "What is the main difference between Claude Free and Pro?"
+    answer: "Claude Pro offers 5x higher usage limits, access to flagship models during peak hours, priority bandwidth, and early access to new feature releases."
+
+  - question: "Does Claude support code execution and live UI previews?"
+    answer: "Yes, Claude features 'Artifacts', a dedicated side-by-side workspace that renders interactive code, React components, HTML prototypes, SVG diagrams, and formatted documents in real time."
+
 ---

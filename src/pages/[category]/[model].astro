@@ -515,6 +515,29 @@ const formattedUpdatedDate = model.data.lastUpdated
         </section>
       )}
 
+      <!-- Frequently Asked Questions -->
+      {model.data.faqs && model.data.faqs.length > 0 && (
+        <section id="faq" class="scroll-mt-24">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="font-mono text-emerald text-sm">§</span>
+            <h2 class="font-display text-2xl sm:text-3xl text-ink">Frequently Asked Questions</h2>
+          </div>
+          <div class="space-y-4">
+            {model.data.faqs.map((faq) => (
+              <details class="group border border-line rounded-lg bg-paper-alt/40 transition-colors [&[open]]:bg-paper-alt/80" style="box-shadow: 0 2px 8px var(--theme-shadow);">
+                <summary class="flex items-center justify-between p-5 cursor-pointer font-display text-lg text-ink select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald rounded-lg">
+                  <span>{faq.question}</span>
+                  <span class="font-mono text-emerald text-xl transition-transform duration-200 group-open:rotate-45 ml-4 shrink-0 font-medium">+</span>
+                </summary>
+                <div class="px-5 pb-5 pt-1 text-sm text-ink-soft leading-relaxed font-body border-t border-line/40 mt-1">
+                  {faq.answer}
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
+
     </div>
   </div>
 

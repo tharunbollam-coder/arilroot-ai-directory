@@ -114,4 +114,21 @@ alternatives:
   - name: "Claude (Anthropic)"
     value: "The primary competitor for massive document analysis and complex coding, known for its nuanced writing style and incredibly low hallucination rate."
     link: "/text-models/claude"
+
+faqs:
+  - question: "Is Google Gemini free to use?"
+    answer: "Yes, Google provides free access to Gemini at gemini.google.com and via mobile apps using any standard Google account."
+
+  - question: "How does Gemini integrate with Google Workspace?"
+    answer: "Gemini integrates directly into Google Docs, Gmail, Sheets, and Slides (for Google Workspace subscribers) to draft emails, summarize documents, and analyze spreadsheet data without leaving your work."
+
+  - question: "What is Gemini Live?"
+    answer: "Gemini Live is a real-time, bidirectional voice interface on mobile devices that allows natural, spoken conversations with the AI without needing to type."
+
+  - question: "What is the context window size of Gemini?"
+    answer: "Gemini supports massive context windows of up to 2 million tokens, enabling users to process massive documents, hours of audio, or extensive code repositories in a single prompt."
+
+  - question: "Can I use Gemini content for commercial work?"
+    answer: "Yes, content generated through Gemini can be used for commercial business, development, and publishing projects according to Google's terms of service."
+
 ---

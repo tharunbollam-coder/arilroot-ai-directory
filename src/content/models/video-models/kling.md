@@ -126,4 +126,21 @@ alternatives:
   - name: "Pika"
     value: "A user-friendly, beginner-focused AI video workspace great for quick social media assets, simple animations, and fun cartoon adjustments."
     link: "/video-models/pika"
+
+faqs:
+  - question: "Is there a free tier for Kling AI?"
+    answer: "Yes, Kling AI provides a free plan with daily free credits that allow creators to test its video generation features and generate short clips."
+
+  - question: "Can I generate video from both text and images?"
+    answer: "Yes, Kling supports text-to-video prompts as well as image-to-video animations, enabling you to bring still photography or graphic art to life."
+
+  - question: "What formats and aspect ratios are supported?"
+    answer: "Kling supports cinematic 16:9 widescreen as well as 9:16 vertical formats optimized for TikTok, Instagram Reels, and YouTube Shorts."
+
+  - question: "Can I use Kling videos for commercial projects?"
+    answer: "Paid subscription tiers grant commercial usage rights for video output, while free tier usage is limited to personal experimentation."
+
+  - question: "Does Kling require installing desktop software?"
+    answer: "No, Kling operates entirely in the cloud via web browsers and mobile apps, so all video rendering happens on cloud servers."
+
 ---

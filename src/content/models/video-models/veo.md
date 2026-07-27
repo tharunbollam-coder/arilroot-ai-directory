@@ -129,4 +129,21 @@ alternatives:
   - name: "Pika"
     value: "An intuitive, beginner-focused creative canvas optimized for quick social media content assets and artistic visual modifications."
     link: "/video-models/pika"
+
+faqs:
+  - question: "How can I access Google's Veo video model?"
+    answer: "Veo is accessible through Google Flow in Google Labs, Gemini Advanced, Google AI Studio for developer API access, and built directly into Google Vids for Workspace subscribers."
+
+  - question: "Are third-party platforms integrated with Veo?"
+    answer: "Yes, Veo is available on partner creative platforms like Higgsfield, offering alternative creative workflows and specialized video tools."
+
+  - question: "Does Veo support native vertical 9:16 video?"
+    answer: "Yes, Veo natively generates both 16:9 cinematic widescreen and 9:16 vertical video formats designed specifically for TikTok, YouTube Shorts, and Instagram Reels."
+
+  - question: "Does Veo generate audio alongside video?"
+    answer: "Yes, Veo features integrated sound design capabilities, generating synchronized background atmosphere, speech tracks, and sound effects matched to video clips."
+
+  - question: "Does Veo require an internet connection?"
+    answer: "Yes, Veo runs complex video diffusion models in Google's cloud infrastructure, requiring an active internet connection."
+
 ---

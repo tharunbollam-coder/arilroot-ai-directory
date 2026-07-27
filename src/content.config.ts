@@ -89,6 +89,11 @@ const modelsCollection = defineCollection({
             value: z.string(),
             link: z.string().optional(),
         })).default([]),
+
+        faqs: z.array(z.object({
+            question: z.string(),
+            answer: z.string(),
+        })).default([]),
     }),
 });
 
