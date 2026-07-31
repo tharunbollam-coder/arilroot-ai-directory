@@ -99,17 +99,18 @@
   /* Rating Stamp — rotated with dashed inset */
   .stamp {
     @apply relative inline-flex flex-col items-center justify-center
-           px-[1.15rem] py-[0.65rem] border border-gold rounded-lg text-center
-           bg-paper-alt;
-    box-shadow: 0 4px 16px var(--theme-stamp-shadow);
+           px-[1.25rem] py-[0.75rem] border border-gold/50 rounded-xl text-center
+           bg-paper-alt/95 backdrop-blur-xs transition-transform duration-300 hover:rotate-0;
+    box-shadow: 0 4px 20px var(--theme-stamp-shadow);
     transform: rotate(-2deg);
   }
   .stamp::before {
     content: "";
     position: absolute;
-    inset: 3px;
+    inset: 4px;
     border: 1px dashed var(--theme-stamp-dashed);
-    border-radius: 5px;
+    border-radius: 7px;
+    pointer-events: none;
   }
 
   /* Section heading marker */

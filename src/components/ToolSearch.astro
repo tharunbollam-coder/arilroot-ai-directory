@@ -1,0 +1,222 @@
+---
+/**
+ * ToolSearch.astro
+ * Client-side fuzzy search component for tools.
+ * 
+ * Props:
+ *   searchIndex - JSON array of { title, link, category, categoryLabel, logo, shortDescription }
+ *   scopeCategory - (optional) if set, only shows results matching this category slug
+ *   placeholder - (optional) custom placeholder text
+ */
+interface Props {
+  searchIndex: string;
+  scopeCategory?: string;
+  placeholder?: string;
+}
+
+const {
+  searchIndex,
+  scopeCategory,
+  placeholder = 'Search tools…',
+} = Astro.props;
+---
+
+<div
+  class="tool-search relative w-full max-w-xl mx-auto"
+  data-search-index={searchIndex}
+  data-scope-category={scopeCategory || ''}
+>
+  <!-- Search Input -->
+  <div class="relative">
+    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-soft pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+    </svg>
+    <input
+      type="text"
+      class="tool-search-input w-full bg-paper-alt border border-line rounded-lg pl-11 pr-4 py-3 font-body text-sm text-ink placeholder:text-ink-soft/60 focus:outline-none focus:ring-2 focus:ring-emerald/40 focus:border-emerald transition-all"
+      style="box-shadow: 0 2px 8px var(--theme-shadow);"
+      placeholder={placeholder}
+      autocomplete="off"
+      aria-label="Search tools"
+      aria-expanded="false"
+      aria-controls="search-results"
+      role="combobox"
+    />
+  </div>
+
+  <!-- Results Dropdown -->
+  <div
+    class="tool-search-results absolute z-50 top-full left-0 right-0 mt-2 bg-paper-alt border border-line rounded-lg overflow-hidden hidden"
+    style="box-shadow: 0 8px 24px var(--theme-shadow);"
+    id="search-results"
+    role="listbox"
+  >
+    <!-- Results injected by JS -->
+  </div>
+</div>
+
+<script>
+  import Fuse from 'fuse.js';
+
+  interface SearchItem {
+    title: string;
+    link: string;
+    category: string;
+    categoryLabel: string;
+    logo: string;
+    shortDescription: string;
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('.tool-search').forEach(initSearch);
+  });
+
+  // Also run on initial load for non-SPA
+  document.querySelectorAll<HTMLElement>('.tool-search').forEach(initSearch);
+
+  function initSearch(container: HTMLElement) {
+    if (container.dataset.initialized) return;
+    container.dataset.initialized = 'true';
+
+    const input = container.querySelector<HTMLInputElement>('.tool-search-input')!;
+    const resultsBox = container.querySelector<HTMLElement>('.tool-search-results')!;
+    const rawIndex: SearchItem[] = JSON.parse(container.dataset.searchIndex || '[]');
+    const scopeCategory = container.dataset.scopeCategory || '';
+
+    // Filter index by category scope if provided
+    const index = scopeCategory
+      ? rawIndex.filter(item => item.category === scopeCategory)
+      : rawIndex;
+
+    // Initialize Fuse.js
+    const fuse = new Fuse(index, {
+      keys: [
+        { name: 'title', weight: 0.7 },
+        { name: 'shortDescription', weight: 0.3 },
+      ],
+      threshold: 0.35,
+      distance: 100,
+      minMatchCharLength: 2,
+      includeScore: true,
+    });
+
+    let activeIndex = -1;
+    let debounceTimer: ReturnType<typeof setTimeout>;
+
+    // Debounced search
+    input.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        const query = input.value.trim();
+        if (query.length < 2) {
+          hideResults();
+          return;
+        }
+        const results = fuse.search(query, { limit: 6 });
+        renderResults(results);
+      }, 180);
+    });
+
+    // Keyboard navigation
+    input.addEventListener('keydown', (e: KeyboardEvent) => {
+      const items = resultsBox.querySelectorAll<HTMLAnchorElement>('[role="option"]');
+      if (!items.length) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        activeIndex = Math.min(activeIndex + 1, items.length - 1);
+        updateActiveItem(items);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, 0);
+        updateActiveItem(items);
+      } else if (e.key === 'Enter' && activeIndex >= 0) {
+        e.preventDefault();
+        items[activeIndex].click();
+      } else if (e.key === 'Escape') {
+        hideResults();
+        input.blur();
+      }
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e: MouseEvent) => {
+      if (!container.contains(e.target as Node)) {
+        hideResults();
+      }
+    });
+
+    // Re-open on focus if there's a query
+    input.addEventListener('focus', () => {
+      const query = input.value.trim();
+      if (query.length >= 2) {
+        const results = fuse.search(query, { limit: 6 });
+        renderResults(results);
+      }
+    });
+
+    function renderResults(results: Fuse.FuseResult<SearchItem>[]) {
+      activeIndex = -1;
+
+      if (results.length === 0) {
+        resultsBox.innerHTML = `
+          <div class="px-5 py-4 text-center">
+            <p class="font-mono text-xs uppercase tracking-wide text-ink-soft">No tools found</p>
+          </div>
+        `;
+        showResults();
+        return;
+      }
+
+      resultsBox.innerHTML = results.map((r, i) => {
+        const item = r.item;
+        const logoHtml = item.logo
+          ? `<div class="logo-box w-8 h-8 shrink-0"><img src="${item.logo}" alt="" loading="lazy" /></div>`
+          : `<div class="w-8 h-8 shrink-0 rounded border border-line bg-paper flex items-center justify-center font-mono text-xs text-ink-soft">${item.title.charAt(0)}</div>`;
+        
+        return `
+          <a
+            href="${item.link}"
+            role="option"
+            aria-selected="false"
+            class="search-result-item flex items-center gap-3 px-4 py-3 no-underline transition-colors hover:bg-emerald/8 focus-visible:bg-emerald/8 focus-visible:outline-none border-b border-line/40 last:border-b-0"
+            data-index="${i}"
+          >
+            ${logoHtml}
+            <div class="flex-1 min-w-0">
+              <p class="font-display text-sm text-ink truncate">${item.title}</p>
+              <p class="font-mono text-[10px] uppercase tracking-wide text-ink-soft mt-0.5">${item.categoryLabel}</p>
+            </div>
+            <span class="font-mono text-emerald text-xs shrink-0">→</span>
+          </a>
+        `;
+      }).join('');
+
+      showResults();
+    }
+
+    function updateActiveItem(items: NodeListOf<HTMLAnchorElement>) {
+      items.forEach((el, i) => {
+        if (i === activeIndex) {
+          el.classList.add('bg-emerald/8');
+          el.setAttribute('aria-selected', 'true');
+          el.scrollIntoView({ block: 'nearest' });
+        } else {
+          el.classList.remove('bg-emerald/8');
+          el.setAttribute('aria-selected', 'false');
+        }
+      });
+    }
+
+    function showResults() {
+      resultsBox.classList.remove('hidden');
+      input.setAttribute('aria-expanded', 'true');
+    }
+
+    function hideResults() {
+      resultsBox.classList.add('hidden');
+      input.setAttribute('aria-expanded', 'false');
+      activeIndex = -1;
+    }
+  }
+</script>
