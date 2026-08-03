@@ -45,6 +45,8 @@ const searchIndex = JSON.stringify(allModels.map(model => {
     shortDescription: model.data.description.slice(0, 120),
   };
 }));
+
+const totalCount = models.length;
 ---
 
 <Layout 
@@ -82,7 +84,7 @@ const searchIndex = JSON.stringify(allModels.map(model => {
     </header>
 
     <!-- Category Search -->
-    <div class="mb-8">
+    <div class="mb-6">
       <ToolSearch
         searchIndex={searchIndex}
         scopeCategory={category}
@@ -90,15 +92,79 @@ const searchIndex = JSON.stringify(allModels.map(model => {
       />
     </div>
 
+    <!-- Filter Bar -->
+    <div id="filter-bar" class="mb-8 bg-paper-alt border border-line rounded-xl p-4 sm:p-5" style="box-shadow: 0 2px 8px var(--theme-shadow);">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+        <!-- Badge Filter -->
+        <div class="flex flex-col gap-2">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-ink-soft font-semibold">Badge</span>
+          <div class="flex flex-wrap gap-1.5" id="badge-filters">
+            <button data-filter-group="badge" data-filter-value="all" class="filter-pill active font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
+              All
+            </button>
+            <button data-filter-group="badge" data-filter-value="main-stack" class="filter-pill font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
+              Main Stack
+            </button>
+            <button data-filter-group="badge" data-filter-value="hands-on-tested" class="filter-pill font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
+              Hands-On Tested
+            </button>
+            <button data-filter-group="badge" data-filter-value="watchlist" class="filter-pill font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
+              Watchlist
+            </button>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="hidden sm:block w-px h-10 bg-line self-end mb-0.5"></div>
+
+        <!-- Pricing Filter -->
+        <div class="flex flex-col gap-2">
+          <span class="font-mono text-[10px] uppercase tracking-wider text-ink-soft font-semibold">Pricing</span>
+          <div class="flex flex-wrap gap-1.5" id="pricing-filters">
+            <button data-filter-group="pricing" data-filter-value="all" class="filter-pill active font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
+              All
+            </button>
+            <button data-filter-group="pricing" data-filter-value="Free" class="filter-pill font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
+              Free
+            </button>
+            <button data-filter-group="pricing" data-filter-value="Freemium" class="filter-pill font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
+              Freemium
+            </button>
+            <button data-filter-group="pricing" data-filter-value="Paid" class="filter-pill font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
+              Paid
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Count & Clear -->
+      <div class="mt-4 pt-3 border-t border-line/50 flex items-center justify-between">
+        <p id="filter-result-count" class="font-mono text-xs text-ink-soft">
+          <span id="count-number" class="text-emerald font-semibold">{totalCount}</span> {totalCount === 1 ? 'tool' : 'tools'}
+        </p>
+        <button id="clear-filters" class="hidden font-mono text-[11px] uppercase tracking-wider text-emerald hover:text-ink transition-colors cursor-pointer font-semibold">
+          Clear filters ×
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="filter-empty-state" class="hidden text-center py-16">
+      <p class="font-display text-xl text-ink-soft mb-2">No tools match these filters</p>
+      <p class="text-sm text-ink-soft/60">Try adjusting your filter criteria above.</p>
+    </div>
+
     <!-- Model Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {models.map((model) => {
         const modelSlug = model.id.split('/').pop();
         return (
           <article 
             id={`model-${modelSlug}`}
-            class="bg-paper-alt border border-line rounded-lg p-6 flex flex-col justify-between hover:border-emerald/45 transition-colors"
+            class="tool-card bg-paper-alt border border-line rounded-lg p-6 flex flex-col justify-between hover:border-emerald/45 transition-colors"
             style="box-shadow: 0 4px 12px var(--theme-shadow);"
+            data-test-status={model.data.testStatus}
+            data-pricing-tier={model.data.pricingTier}
           >
             <div>
               <div class="flex items-start justify-between gap-4 mb-4">
@@ -185,4 +251,130 @@ const searchIndex = JSON.stringify(allModels.map(model => {
       })}
     </div>
   </div>
+
+  <style>
+    /* Filter pill default (inactive) state */
+    .filter-pill {
+      background-color: var(--theme-paper);
+      border-color: var(--theme-line);
+      color: var(--theme-ink-soft);
+    }
+    .filter-pill:hover {
+      border-color: var(--theme-emerald);
+      color: var(--theme-ink);
+    }
+    /* Filter pill active state */
+    .filter-pill.active {
+      background-color: var(--theme-emerald);
+      border-color: var(--theme-emerald);
+      color: #fff;
+    }
+    [data-theme="dark"] .filter-pill.active {
+      color: #0C1017;
+    }
+    /* Hide filtered-out cards */
+    .tool-card.filter-hidden {
+      display: none;
+    }
+  </style>
+
+  <script is:inline>
+    (function() {
+      const grid = document.getElementById('tools-grid');
+      const emptyState = document.getElementById('filter-empty-state');
+      const countNumber = document.getElementById('count-number');
+      const countContainer = document.getElementById('filter-result-count');
+      const clearBtn = document.getElementById('clear-filters');
+      if (!grid) return;
+
+      const allCards = grid.querySelectorAll('.tool-card');
+      let activeBadge = 'all';
+      let activePricing = 'all';
+
+      // Attach click handlers to all filter pills
+      document.querySelectorAll('.filter-pill').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var group = this.getAttribute('data-filter-group');
+          var value = this.getAttribute('data-filter-value');
+
+          // Update active state for the group
+          document.querySelectorAll('.filter-pill[data-filter-group="' + group + '"]').forEach(function(b) {
+            b.classList.remove('active');
+          });
+          this.classList.add('active');
+
+          if (group === 'badge') activeBadge = value;
+          if (group === 'pricing') activePricing = value;
+
+          applyFilters();
+        });
+      });
+
+      // Clear filters button
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+          activeBadge = 'all';
+          activePricing = 'all';
+
+          document.querySelectorAll('.filter-pill').forEach(function(btn) {
+            btn.classList.remove('active');
+          });
+          document.querySelectorAll('.filter-pill[data-filter-value="all"]').forEach(function(btn) {
+            btn.classList.add('active');
+          });
+
+          applyFilters();
+        });
+      }
+
+      function applyFilters() {
+        var visibleCount = 0;
+
+        allCards.forEach(function(card) {
+          var testStatus = card.getAttribute('data-test-status');
+          var pricingTier = card.getAttribute('data-pricing-tier');
+
+          var badgeMatch = (activeBadge === 'all') || (testStatus === activeBadge);
+          var pricingMatch = (activePricing === 'all') || (pricingTier === activePricing);
+
+          if (badgeMatch && pricingMatch) {
+            card.classList.remove('filter-hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('filter-hidden');
+          }
+        });
+
+        // Update count
+        if (countNumber) {
+          countNumber.textContent = visibleCount;
+        }
+        if (countContainer) {
+          var suffix = visibleCount === 1 ? ' tool' : ' tools';
+          countContainer.innerHTML = '<span id="count-number" class="text-emerald font-semibold">' + visibleCount + '</span>' + suffix;
+        }
+
+        // Toggle empty state
+        if (emptyState) {
+          if (visibleCount === 0) {
+            emptyState.classList.remove('hidden');
+            grid.classList.add('hidden');
+          } else {
+            emptyState.classList.add('hidden');
+            grid.classList.remove('hidden');
+          }
+        }
+
+        // Toggle clear button visibility
+        var isFiltered = (activeBadge !== 'all' || activePricing !== 'all');
+        if (clearBtn) {
+          if (isFiltered) {
+            clearBtn.classList.remove('hidden');
+          } else {
+            clearBtn.classList.add('hidden');
+          }
+        }
+      }
+    })();
+  </script>
 </Layout>

@@ -6,6 +6,7 @@ description: "Google Gemini is a highly capable multimodal AI ecosystem deeply i
 creator: "Google DeepMind"
 publishedDate: 2026-03-01
 testStatus: "hands-on-tested"
+pricingTier: Freemium
 logo: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg"
 officialLink: "https://gemini.google.com"
 

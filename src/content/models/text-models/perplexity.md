@@ -6,6 +6,7 @@ description: "Perplexity AI is an advanced conversational search engine and rese
 creator: "Perplexity"
 publishedDate: 2026-03-20
 testStatus: "hands-on-tested"
+pricingTier: Freemium
 logo: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Perplexity_logo_2026.svg"
 officialLink: "https://www.perplexity.ai"
 

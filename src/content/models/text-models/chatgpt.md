@@ -7,6 +7,7 @@ creator: "OpenAI"
 publishedDate: 2026-01-15
 lastUpdated: 2026-07-01
 testStatus: "main-stack"
+pricingTier: Freemium
 logo: "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg"
 officialLink: "https://chatgpt.com"
 

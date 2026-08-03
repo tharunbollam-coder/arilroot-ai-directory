@@ -7,6 +7,7 @@ creator: "Anthropic"
 publishedDate: 2026-02-10
 lastUpdated: 2026-07-05
 testStatus: "main-stack"
+pricingTier: Freemium
 logo: "https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg"
 officialLink: "https://claude.ai"
 
