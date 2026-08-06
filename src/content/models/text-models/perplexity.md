@@ -5,15 +5,14 @@ description: "Perplexity AI is an advanced conversational search engine and rese
 
 creator: "Perplexity"
 publishedDate: 2026-03-20
-testStatus: "hands-on-tested"
+listingStatus: "curated"
 pricingTier: Freemium
 logo: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Perplexity_logo_2026.svg"
 officialLink: "https://www.perplexity.ai"
 
-editorsReview:
+editorsOpinion:
   rating: "4.8/5"
-  verdict: "The absolute best tool for research, fact-checking, and market analysis. It completely replaces traditional search engines. The Pro plan is the best value in the AI industry, as it lets you toggle between GPT-5, Claude, and Gemini inside a single $20 interface."
-  handsOnNotes: "We use Perplexity every day for technical deep dives and competitor analysis. Because it enforces citations for every single sentence, the hallucination risk is drastically lower than asking a standard LLM. However, we still prefer Claude for creative writing or coding from scratch without web context."
+  opinion: "I've used Perplexity for technical deep dives and competitor research, and it is my preferred starting point when I need cited answers from the web. Its Pro plan offers strong value by bringing GPT-5, Claude, and Gemini into one interface. The inline citations make it easier to trace claims back to their sources, though I still reach for Claude when I am writing creatively or coding from scratch without web context."
 
 promptTechniques:
   - title: "The 'Page Generator' Command"

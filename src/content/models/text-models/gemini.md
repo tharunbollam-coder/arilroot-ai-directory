@@ -5,15 +5,14 @@ description: "Google Gemini is a highly capable multimodal AI ecosystem deeply i
 
 creator: "Google DeepMind"
 publishedDate: 2026-03-01
-testStatus: "hands-on-tested"
+listingStatus: "curated"
 pricingTier: Freemium
 logo: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg"
 officialLink: "https://gemini.google.com"
 
-editorsReview:
+editorsOpinion:
   rating: "4.7/5"
-  verdict: "The absolute best choice if you live inside the Google ecosystem. Its native integration with Google Docs, Drive, and Workspace makes document analysis frictionless. While it occasionally trails in highly specific niche coding tasks compared to specialized models, its massive 1-million-to-2-million token context window makes it unbeatable for analyzing entire codebases or reading multiple large PDFs at once."
-  handsOnNotes: "We use Gemini daily for bulk data synthesis. The ability to drop 50 PDFs into the context window and have it instantly cross-reference them without crashing is a game changer. The new Gemini Live voice feature is also currently the most natural-sounding conversational AI we've tested for mobile use."
+  opinion: "I've used Gemini for bulk data synthesis and work inside the Google ecosystem. Its native Docs, Drive, and Workspace integration makes large-document work feel frictionless, and its huge context window is excellent for cross-referencing many PDFs or working through a codebase. It can trail specialized models on niche coding tasks, but Gemini Live is one of the most natural voice experiences I've used on mobile."
 
 promptTechniques:
   - title: "The 'Context-First' Dump (Leveraging Massive Context)"

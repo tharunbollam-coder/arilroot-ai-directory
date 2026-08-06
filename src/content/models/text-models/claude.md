@@ -6,15 +6,14 @@ description: "Claude is an advanced AI assistant created by Anthropic, renowned 
 creator: "Anthropic"
 publishedDate: 2026-02-10
 lastUpdated: 2026-07-05
-testStatus: "main-stack"
+listingStatus: "main-stack"
 pricingTier: Freemium
 logo: "https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg"
 officialLink: "https://claude.ai"
 
-editorsReview:
+editorsOpinion:
   rating: "4.9/5"
-  verdict: "The definitive model for heavy readers, researchers, and professional writers. If you need to write a 10-page legal brief or analyze a 500-page book, Claude is unmatched. Its writing feels the most 'human' and least artificial compared to its competitors."
-  handsOnNotes: "In our internal testing, Claude consistently hallucinates the least when analyzing massive documents. While it lacks the native ecosystem integration of Gemini or the vast custom GPT library of ChatGPT, its core intelligence, writing style, and the interactive 'Artifacts' UI make it the superior choice for deep, focused knowledge work."
+  opinion: "I use Claude regularly for deep reading, research, and professional writing. It is especially strong when I need to work through a long legal brief or a large book, and its writing feels more natural than the alternatives I use. It lacks Gemini's native ecosystem integration and ChatGPT's vast custom GPT library, but its core intelligence, writing style, and Artifacts make it my pick for focused knowledge work."
 
 promptTechniques:
   - title: "The 'XML Tagging' Structure (Mastering Claude's Native Format)"

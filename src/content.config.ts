@@ -14,20 +14,22 @@ const modelsCollection = defineCollection({
         publishedDate: z.coerce.date(),
         lastUpdated: z.coerce.date().optional(),
         pricingTier: z.enum(['Free', 'Freemium', 'Paid']).default('Freemium'),
-        testStatus: z.enum(['main-stack', 'hands-on-tested', 'watchlist']),
+        listingStatus: z.enum(['main-stack', 'curated', 'watchlist']),
 
         // Media & Assets (Optional to support open-source models without logos or sites)
         logo: z.string().url().optional().nullable(),
         officialLink: z.string().url().optional().nullable(),
 
         // ==========================================
-        // NEW ADDITION: EDITOR'S REVIEW (OPTIONAL)
+        // A listing may be explicitly unrated while it is still on the watchlist.
         // ==========================================
-        editorsReview: z.object({
-            rating: z.string(),
-            verdict: z.string(),
-            handsOnNotes: z.string(),
-        }).optional(),
+        editorsOpinion: z.object({
+            rating: z.string().nullable(),
+            opinion: z.string().trim().min(1).nullable(),
+        }).refine(
+            ({ rating, opinion }) => opinion !== null || rating === null,
+            { message: 'A rating can only be set when an opinion is present.' },
+        ),
 
         // ==========================================
         // NEW ADDITION: PROMPT TECHNIQUES (DEFAULTS TO EMPTY ARRAY)
@@ -94,6 +96,14 @@ const modelsCollection = defineCollection({
             question: z.string(),
             answer: z.string(),
         })).default([]),
+    }).superRefine((model, context) => {
+        if (model.listingStatus === 'watchlist' && (model.editorsOpinion.opinion !== null || model.editorsOpinion.rating !== null)) {
+            context.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: 'Watchlist listings cannot have an opinion or rating.',
+                path: ['editorsOpinion'],
+            });
+        }
     }),
 });
 

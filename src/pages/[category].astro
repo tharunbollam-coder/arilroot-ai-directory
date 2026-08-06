@@ -78,7 +78,7 @@ const totalCount = models.length;
       </h1>
       <div class="pt-6 border-t border-line">
         <p class="text-ink-soft leading-relaxed max-w-4xl font-display italic text-lg sm:text-xl">
-          "A hand-picked selection of the most powerful models in the {displayName} ecosystem. Browse detailed capabilities, architectures, and full analysis sheets below."
+          "A hand-picked selection of models in the {displayName} ecosystem. Browse detailed capabilities, architectures, and tool information below."
         </p>
       </div>
     </header>
@@ -105,8 +105,8 @@ const totalCount = models.length;
             <button data-filter-group="badge" data-filter-value="main-stack" class="filter-pill font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
               Main Stack
             </button>
-            <button data-filter-group="badge" data-filter-value="hands-on-tested" class="filter-pill font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
-              Hands-On Tested
+            <button data-filter-group="badge" data-filter-value="curated" class="filter-pill font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
+              Curated
             </button>
             <button data-filter-group="badge" data-filter-value="watchlist" class="filter-pill font-mono text-[11px] uppercase tracking-wider font-semibold rounded-md px-3 py-1.5 border transition-all duration-200 cursor-pointer select-none shadow-2xs">
               Watchlist
@@ -163,7 +163,7 @@ const totalCount = models.length;
             id={`model-${modelSlug}`}
             class="tool-card bg-paper-alt border border-line rounded-lg p-6 flex flex-col justify-between hover:border-emerald/45 transition-colors"
             style="box-shadow: 0 4px 12px var(--theme-shadow);"
-            data-test-status={model.data.testStatus}
+            data-listing-status={model.data.listingStatus}
             data-pricing-tier={model.data.pricingTier}
           >
             <div>
@@ -187,24 +187,24 @@ const totalCount = models.length;
                 </div>
 
                 <div class="flex flex-wrap gap-2 items-center justify-end">
-                  {model.data.testStatus === 'main-stack' && (
-                    <span class="font-mono text-[10px] uppercase tracking-wider border border-emerald/35 text-emerald bg-emerald-light/90 rounded-md px-2.5 py-1 inline-flex items-center gap-1.5 font-semibold shadow-2xs">
+                  {model.data.listingStatus === 'main-stack' && (
+                    <span title="Used regularly" class="font-mono text-[10px] uppercase tracking-wider border border-emerald/35 text-emerald bg-emerald-light/90 rounded-md px-2.5 py-1 inline-flex items-center gap-1.5 font-semibold shadow-2xs">
                       <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       Main Stack
                     </span>
                   )}
-                  {model.data.testStatus === 'hands-on-tested' && (
-                    <span class="font-mono text-[10px] uppercase tracking-wider border border-gold/35 text-gold bg-gold-light/90 rounded-md px-2.5 py-1 inline-flex items-center gap-1.5 font-semibold shadow-2xs">
+                  {model.data.listingStatus === 'curated' && (
+                    <span title="Used, not a daily pick" class="font-mono text-[10px] uppercase tracking-wider border border-gold/35 text-gold bg-gold-light/90 rounded-md px-2.5 py-1 inline-flex items-center gap-1.5 font-semibold shadow-2xs">
                       <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19 14.5" />
                       </svg>
-                      Hands-On Tested
+                      Curated
                     </span>
                   )}
-                  {model.data.testStatus === 'watchlist' && (
-                    <span class="font-mono text-[10px] uppercase tracking-wider border border-line text-ink-soft bg-paper rounded-md px-2.5 py-1 inline-flex items-center gap-1.5 font-semibold shadow-2xs">
+                  {model.data.listingStatus === 'watchlist' && (
+                    <span title="Following it, not used yet" class="font-mono text-[10px] uppercase tracking-wider border border-line text-ink-soft bg-paper rounded-md px-2.5 py-1 inline-flex items-center gap-1.5 font-semibold shadow-2xs">
                       <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -331,10 +331,10 @@ const totalCount = models.length;
         var visibleCount = 0;
 
         allCards.forEach(function(card) {
-          var testStatus = card.getAttribute('data-test-status');
+          var listingStatus = card.getAttribute('data-listing-status');
           var pricingTier = card.getAttribute('data-pricing-tier');
 
-          var badgeMatch = (activeBadge === 'all') || (testStatus === activeBadge);
+          var badgeMatch = (activeBadge === 'all') || (listingStatus === activeBadge);
           var pricingMatch = (activePricing === 'all') || (pricingTier === activePricing);
 
           if (badgeMatch && pricingMatch) {

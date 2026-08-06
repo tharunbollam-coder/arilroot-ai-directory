@@ -6,16 +6,13 @@ description: "Google Veo is a premium AI video generation model built directly i
 creator: "Google DeepMind"
 publishedDate: 2026-05-08
 pricingTier: Paid
-testStatus: "watchlist"
+listingStatus: "watchlist"
 logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
 officialLink: "https://deepmind.google/technologies/veo/"
 
-editorsReview:
-  rating: "4.7/5"
-  verdict: |
-    Google Veo stands out as one of the most promising video generation architectures currently in development by Google DeepMind. Based on technical whitepapers, research previews, and early enterprise demos, Veo's native multi-layered audio synchronization makes it an engine we are tracking closely.
-  handsOnNotes: |
-    We are monitoring Veo's rollout across Google Cloud and Vertex AI infrastructure. Its multi-image character reference controls and synchronized audio-video generation promise to solve key friction points in video production. We plan to conduct full hands-on benchmark testing as soon as general developer access opens up.
+editorsOpinion:
+  rating: null
+  opinion: null
 
 promptTechniques:
   - title: "First-and-Last Frame Mapping"

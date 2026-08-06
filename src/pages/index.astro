@@ -60,7 +60,7 @@ const searchIndex = JSON.stringify(allModels.map(model => {
         <span class="text-emerald">Digital Intelligence</span>
       </h1>
       <p class="mt-6 font-display italic text-xl sm:text-2xl text-ink-soft leading-snug max-w-2xl mx-auto">
-        "An elegantly curated catalog of state-of-the-art AI models. We analyze, detail, and catalog intelligence architectures to simplify integration for modern builders."
+        "A curated catalog of state-of-the-art AI models, with practical details to help modern builders explore their options."
       </p>
     </div>
 
@@ -85,16 +85,16 @@ const searchIndex = JSON.stringify(allModels.map(model => {
     </div>
   </section>
 
-  <!-- "How I Rate Tools" Explainer Section -->
+  <!-- Listing status explainer -->
   <section class="container mx-auto max-w-6xl px-6 py-16 border-t border-line">
     <div class="mb-12 text-center max-w-3xl mx-auto">
-      <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-3">Transparency & Credibility</p>
+      <p class="font-mono text-xs uppercase tracking-[0.25em] text-emerald mb-3">Listing Status</p>
       <div class="flex items-center justify-center gap-3 mb-4">
         <span class="font-mono text-emerald text-sm font-semibold">§</span>
-        <h2 class="font-display text-2xl sm:text-4xl text-ink font-medium">How I Rate Tools</h2>
+        <h2 class="font-display text-2xl sm:text-4xl text-ink font-medium">How Tools Are Listed</h2>
       </div>
       <p class="text-ink-soft text-sm sm:text-base leading-relaxed">
-        Every tool in this directory carries an explicit status badge reflecting my actual hands-on experience and relationship with the technology.
+        Each badge reflects how much I currently use a tool.
       </p>
     </div>
 
@@ -114,12 +114,12 @@ const searchIndex = JSON.stringify(allModels.map(model => {
             </span>
           </div>
           <p class="text-sm text-ink-soft leading-relaxed font-body">
-            I use this regularly. My review comes from real, everyday experience with it.
+            The tools I use day to day. They are part of my regular workflow, so I have a full opinion and a rating for each one.
           </p>
         </div>
       </div>
 
-      <!-- Hands-On Tested -->
+      <!-- Curated -->
       <div class="group relative bg-paper-alt border border-line rounded-xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:border-gold/40 hover:-translate-y-1 overflow-hidden" style="box-shadow: 0 4px 16px var(--theme-shadow);">
         <div class="absolute top-0 left-0 right-0 h-1 bg-gold rounded-t-xl opacity-80 group-hover:opacity-100 transition-opacity"></div>
         <div>
@@ -130,11 +130,11 @@ const searchIndex = JSON.stringify(allModels.map(model => {
               </svg>
             </div>
             <span class="font-mono text-xs uppercase tracking-wider font-semibold border border-gold/30 text-gold bg-gold-light/80 rounded-md px-3 py-1 inline-flex items-center gap-1.5 shadow-2xs">
-              Hands-On Tested
+              Curated
             </span>
           </div>
           <p class="text-sm text-ink-soft leading-relaxed font-body">
-            I've personally tried this enough to give an honest opinion, even though I don't use it daily.
+            Tools I've used or tried, just not every day. When I've used one enough to form a real opinion, I share it here with a rating; otherwise, I explain why it is listed without a rating.
           </p>
         </div>
       </div>
@@ -155,11 +155,14 @@ const searchIndex = JSON.stringify(allModels.map(model => {
             </span>
           </div>
           <p class="text-sm text-ink-soft leading-relaxed font-body">
-            I follow this closely but haven't used it myself yet, usually because of price. No star rating yet — just what I've learned from watching it closely. I plan to test this myself down the line and update this review once I have.
+            Tools I haven't used myself. I follow their news and updates, but until I try one, there is no opinion or rating here.
           </p>
         </div>
       </div>
     </div>
+    <p class="mt-8 text-center text-sm text-ink-soft leading-relaxed max-w-3xl mx-auto">
+      These badges reflect how much I currently use a tool — nothing more. A watchlist tool moves to curated once I try it, and a curated tool can become main-stack if it earns a regular spot in my day-to-day work.
+    </p>
   </section>
 
   <!-- Categories Grid Section -->

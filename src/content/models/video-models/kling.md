@@ -6,16 +6,14 @@ description: "Kling Video 3.0 is a highly capable AI video generator built speci
 creator: "Kuaishou"
 publishedDate: 2026-04-12
 pricingTier: Free
-testStatus: "hands-on-tested"
+listingStatus: "curated"
 logo: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Kuaishou_logo.svg"
 officialLink: "https://klingai.com"
 
-editorsReview:
+editorsOpinion:
   rating: "4.8/5"
-  verdict: |
-    If you are trying to make actual stories, ad campaigns, or continuous social clips, Kling Video 3.0 is easily the best choice on the market right now. The biggest issue with most AI video tools is that they only make short, random, single clips that are a nightmare to edit together into a cohesive video. Kling fixes this entirely by behaving more like a real human director. It naturally links your scenes together, keeps the backgrounds stable, and ensures your main characters actually look like the same people across different camera angles.
-  handsOnNotes: |
-    We put this tool through heavy testing inside actual YouTube shorts pipelines and real-world product ad workflows to see how it holds up under pressure. The biggest win we noticed is in the face-tracking system; the classic glitchy, shifting faces that used to ruin AI videos are completely gone here. The 3.0 engine locks onto your character's facial traits beautifully. On top of that, the native 4K upscaled output is incredibly clean and crisp, meaning you don't need to waste extra money or time running your videos through a separate third-party upscaling program before posting.
+  opinion: |
+    I've used Kling Video 3.0 in YouTube Shorts pipelines and product-ad workflows. It is particularly good for stories, campaigns, and connected social clips because it keeps scenes, backgrounds, and characters more consistent across camera angles. The face tracking holds onto a character's traits well, and the native 4K upscaled output is clean enough that I do not usually need a separate upscaling step before posting.
 
 promptTechniques:
   - title: "The Multi-Scene Storytelling Method"

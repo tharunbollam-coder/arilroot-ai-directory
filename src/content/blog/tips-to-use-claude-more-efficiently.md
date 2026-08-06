@@ -67,4 +67,4 @@ To maintain optimal context awareness when dealing with large 200,000+ token doc
 
 ## 5. Building Custom System Prompts for Team Workflows
 
-Creating a standardized system prompt across your team ensures reproducible outputs across different engineering and editorial tasks. By defining persistent roles, output constraints, and domain terminology, Claude seamlessly aligns with your team's existing guidelines and coding standards. For detailed model specifications and pricing structures, visit our full [Claude Review Page](/text-models/claude).
+Creating a standardized system prompt across your team ensures reproducible outputs across different engineering and editorial tasks. By defining persistent roles, output constraints, and domain terminology, Claude seamlessly aligns with your team's existing guidelines and coding standards. For detailed model specifications and pricing structures, visit the full [Claude listing](/text-models/claude).
